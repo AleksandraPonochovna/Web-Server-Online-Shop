@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Add product</title>
@@ -6,14 +7,6 @@
 <body>
 <center>
 <h2>Add Product</h2>
-    <%
-        response.getWriter().write("<center>");
-        String validFields = (String) request.getAttribute("valid");
-        if (validFields != null) {
-            response.getWriter().write(validFields);
-        }
-        response.getWriter().write("</center>");
-    %>
 <form action="/add/product" method="POST">
     Name:<br>
     <input type="text" name="name" value="">
@@ -23,7 +16,9 @@
     <br>
     Price:<br>
     <input name="price" type="number" step="0.01"/> <br>
-    <br><br>
+    <br>
+    ${valid}
+    <br>
     <button type="submit">Add Product</button>
 </form>
 </center>
