@@ -7,14 +7,14 @@
 <body>
 <center>
     <h2>Sign In</h2>
-    <form action="/users" method="get">
+    <form action="/sign" method="post">
         Email:<br>
         <input type="email" name="email" value="">
         <br>
         Password:<br>
         <input type="password" name="password" value="">
         <br>
-        ${notfound}
+        ${not_found}
         <br>
         <input type="submit" value="Sign In">
     </form>

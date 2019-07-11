@@ -2,6 +2,7 @@ package controller;
 
 import factory.ProductServiceFactory;
 import model.Product;
+import org.apache.log4j.Logger;
 import service.ProductService;
 import util.IdGeneratorUtil;
 
@@ -15,7 +16,8 @@ import java.io.IOException;
 @WebServlet(value = "/add/product")
 public class AddProductServlet extends HttpServlet {
 
-    private ProductService productService = ProductServiceFactory.getProductService();
+    private static final ProductService productService = ProductServiceFactory.getProductService();
+    private static final Logger logger = Logger.getLogger(AddProductServlet.class);
     private Product product;
 
     @Override
@@ -33,6 +35,7 @@ public class AddProductServlet extends HttpServlet {
             Double price = Double.valueOf(request.getParameter("price"));
             product = new Product(IdGeneratorUtil.getProductId(), name, description, price);
             productService.addProduct(product);
+            logger.info("Product {" + name + " " + price + "} is added in db.");
             response.sendRedirect("/products");
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (NumberFormatException ex) {

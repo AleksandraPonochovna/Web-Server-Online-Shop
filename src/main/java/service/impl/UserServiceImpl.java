@@ -12,6 +12,11 @@ public class UserServiceImpl implements UserService {
     private UsersDao usersDao = UserDaoFactory.getUserDao();
 
     @Override
+    public void addUser(Long id, String email, String password) {
+        usersDao.addUser(id, email, password);
+    }
+
+    @Override
     public void addUser(User user) {
         usersDao.addUser(user);
     }

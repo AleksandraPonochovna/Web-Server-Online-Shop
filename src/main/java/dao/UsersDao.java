@@ -8,8 +8,12 @@ public interface UsersDao {
 
     void addUser(User user);
 
+    void addUser(Long id, String email, String password);
+
     List<User> getAllUsers();
 
     void deleteUser(Long id);
+
+    User getById(Long id);
 
 }

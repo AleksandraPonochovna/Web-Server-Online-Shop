@@ -13,6 +13,8 @@
     <tr>
         <th> Email </th>
         <th> Password </th>
+        <th> Edit </th>
+        <th> Delete </th>
     </tr>
     <c:forEach var="user" items="${users}">
         <tr>

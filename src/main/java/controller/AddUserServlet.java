@@ -2,6 +2,7 @@ package controller;
 
 import factory.UserServiceFactory;
 import model.User;
+import org.apache.log4j.Logger;
 import service.UserService;
 import util.IdGeneratorUtil;
 
@@ -15,8 +16,8 @@ import java.io.IOException;
 @WebServlet(value = "/add/user")
 public class AddUserServlet extends HttpServlet {
 
-    private UserService userService = UserServiceFactory.getUserService();
-    private User user;
+    private static final UserService userService = UserServiceFactory.getUserService();
+    private static final Logger logger = Logger.getLogger(AddUserServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -32,13 +33,14 @@ public class AddUserServlet extends HttpServlet {
             String password = request.getParameter("password");
             String repeatPassword = request.getParameter("rpassword");
             if (password.equals(repeatPassword)) {
-                user = new User(IdGeneratorUtil.getUserId(), email, password);
-                userService.addUser(user);
+                userService.addUser(IdGeneratorUtil.getUserId(), email, password);
+                logger.info("User {" + email + " " + password + "} is added in db.");
                 response.sendRedirect("/users");
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
                 request.setAttribute("email", email);
                 request.setAttribute("error", "Your passwors are not equal.");
+                logger.info("Passwords {" + password + " " + repeatPassword + "} are not equals.");
                 request.getRequestDispatcher("/add_user.jsp").forward(request, response);
             }
         } catch (NumberFormatException ex) {

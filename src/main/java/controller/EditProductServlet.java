@@ -2,7 +2,9 @@ package controller;
 
 import factory.ProductServiceFactory;
 import model.Product;
+import org.apache.log4j.Logger;
 import service.ProductService;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
