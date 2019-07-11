@@ -18,8 +18,6 @@ public class AddProductServlet extends HttpServlet {
 
     private static final ProductService productService = ProductServiceFactory.getProductService();
     private static final Logger logger = Logger.getLogger(AddProductServlet.class);
-    private Product product;
-
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
@@ -33,8 +31,7 @@ public class AddProductServlet extends HttpServlet {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             Double price = Double.valueOf(request.getParameter("price"));
-            product = new Product(IdGeneratorUtil.getProductId(), name, description, price);
-            productService.addProduct(product);
+            productService.addProduct(IdGeneratorUtil.getProductId(), name, description, price);
             logger.info("Product {" + name + " " + price + "} is added in db.");
             response.sendRedirect("/products");
             response.setStatus(HttpServletResponse.SC_OK);

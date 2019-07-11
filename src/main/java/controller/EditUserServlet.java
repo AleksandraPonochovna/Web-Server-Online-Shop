@@ -21,7 +21,7 @@ public class EditUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         Long id = Long.valueOf(request.getParameter("id"));
-        user = userService.getById(id);
+        userService.getById(id);
         request.setAttribute("oldEmail", user.getEmail());
         request.setAttribute("oldPassword", user.getPassword());
         request.getRequestDispatcher("/edit_user.jsp").forward(request, response);

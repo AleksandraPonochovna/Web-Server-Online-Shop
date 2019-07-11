@@ -17,6 +17,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void addProduct(Long id, String name, String description, Double price) {
+        productsDao.addProduct(id, name, description, price);
+    }
+
+    @Override
     public List<Product> getAllProducts() {
         return productsDao.getAllProducts();
     }
