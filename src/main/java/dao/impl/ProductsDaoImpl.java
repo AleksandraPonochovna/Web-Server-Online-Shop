@@ -21,7 +21,7 @@ public class ProductsDaoImpl implements ProductsDao {
     public void addProduct(Long id, String name, String description, Double price) {
         product = new Product(id, name, description, price);
         Database.products.add(product);
-        logger.info("User " + product + "added in DB");
+        logger.info("Product " + product + "added in DB");
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ProductsDaoImpl implements ProductsDao {
                 .filter(x -> x.getId().equals(id))
                 .findFirst()
                 .ifPresent(x -> Database.products.remove(x));
-        logger.info("User with email " + getById(id).getName()  + "removed in db");
+        logger.info("Product with name " + getById(id).getName()  + "removed in db");
     }
 
     @Override

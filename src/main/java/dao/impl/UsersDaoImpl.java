@@ -36,7 +36,7 @@ public class UsersDaoImpl implements UsersDao {
                 .filter(x -> x.getId().equals(id))
                 .findFirst()
                 .ifPresent(x -> Database.users.remove(x));
-        logger.info("User with email " + getById(id).getEmail()  + "removed in db");
+        logger.info("User with email " + getById(id).getEmail() + "removed in db");
     }
 
     @Override

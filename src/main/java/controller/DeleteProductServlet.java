@@ -3,7 +3,6 @@ package controller;
 import factory.ProductServiceFactory;
 import org.apache.log4j.Logger;
 import service.ProductService;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +23,7 @@ public class DeleteProductServlet extends HttpServlet {
         String id = request.getParameter("id");
         if (id != null) {
             productService.deleteProduct(Long.valueOf(id));
-            logger.info("Product { id = " + id + "} is deleted in db." );
+            logger.info("Product { id = " + id + "} is deleted in db.");
         }
         response.sendRedirect("/products");
         response.setStatus(HttpServletResponse.SC_OK);

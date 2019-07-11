@@ -1,7 +1,6 @@
 package controller;
 
 import factory.ProductServiceFactory;
-import model.Product;
 import org.apache.log4j.Logger;
 import service.ProductService;
 import util.IdGeneratorUtil;
@@ -18,6 +17,7 @@ public class AddProductServlet extends HttpServlet {
 
     private static final ProductService productService = ProductServiceFactory.getProductService();
     private static final Logger logger = Logger.getLogger(AddProductServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {

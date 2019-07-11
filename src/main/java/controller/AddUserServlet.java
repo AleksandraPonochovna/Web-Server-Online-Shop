@@ -1,7 +1,6 @@
 package controller;
 
 import factory.UserServiceFactory;
-import model.User;
 import org.apache.log4j.Logger;
 import service.UserService;
 import util.IdGeneratorUtil;

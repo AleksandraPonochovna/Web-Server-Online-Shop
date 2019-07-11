@@ -23,7 +23,7 @@ public class DeleteUserServlet extends HttpServlet {
         String id = request.getParameter("id");
         if (id != null) {
             userService.deleteUser(Long.valueOf(id));
-            logger.info("User { id = " + id + "} is deleted in db." );
+            logger.info("User { id = " + id + "} is deleted in db.");
         }
         response.sendRedirect("/users");
         response.setStatus(HttpServletResponse.SC_OK);
