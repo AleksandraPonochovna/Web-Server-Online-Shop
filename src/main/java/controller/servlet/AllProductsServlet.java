@@ -1,4 +1,4 @@
-package controller;
+package controller.servlet;
 
 import factory.ProductServiceFactory;
 import service.ProductService;
@@ -19,7 +19,7 @@ public class AllProductsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("products", productService.getAllProducts());
-        request.getRequestDispatcher("/products.jsp").forward(request, response);
+        request.getRequestDispatcher("/products_for_admin.jsp").forward(request, response);
     }
 
 }

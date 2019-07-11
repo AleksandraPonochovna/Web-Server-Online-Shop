@@ -26,6 +26,13 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     @Override
+    public void addUser(Long id, String email, String password, User.ROLE role) {
+        user = new User(id, email, password, role);
+        Database.users.add(user);
+        logger.info("User " + user + "added in DB");
+    }
+
+    @Override
     public List<User> getAllUsers() {
         return Database.users;
     }
@@ -43,6 +50,38 @@ public class UsersDaoImpl implements UsersDao {
     public User getById(Long id) {
         for (User user : Database.users) {
             if (user.getId().equals(id)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean userIsExist(String email, String password) {
+        for (User user : Database.users) {
+            if (email != null && password != null) {
+                if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public User.ROLE getRoleByEmailPassword(String email, String password) {
+        for (User user : Database.users) {
+            if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
+                return user.getRole();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        for (User user : Database.users) {
+            if (user.getEmail().equals(email)) {
                 return user;
             }
         }

@@ -1,4 +1,4 @@
-package controller;
+package controller.servlet;
 
 import factory.UserServiceFactory;
 import model.User;
@@ -20,8 +20,14 @@ public class EditUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        Long id = Long.valueOf(request.getParameter("id"));
-        user = userService.getById(id);
+        if (!request.getParameter("id").isEmpty()) {
+            Long id = Long.valueOf(request.getParameter("id"));
+            user = userService.getById(id);
+        }
+        if (!request.getParameter("email").isEmpty()) {
+            String email = request.getParameter("email");
+            user = userService.getByEmail(email);
+        }
         request.setAttribute("oldEmail", user.getEmail());
         request.setAttribute("oldPassword", user.getPassword());
         request.getRequestDispatcher("/edit_user.jsp").forward(request, response);

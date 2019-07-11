@@ -28,21 +28,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Long id) {
-        for (Product product : productsDao.getAllProducts()) {
-            if (product.getId().equals(id)) {
-                productsDao.getAllProducts().remove(product);
-            }
-        }
+        productsDao.deleteProduct(id);
     }
 
     @Override
     public Product getById(Long id) {
-        for (Product product : productsDao.getAllProducts()) {
-            if (product.getId().equals(id)) {
-                return product;
-            }
-        }
-        return null;
+        return productsDao.getById(id);
     }
 
 }

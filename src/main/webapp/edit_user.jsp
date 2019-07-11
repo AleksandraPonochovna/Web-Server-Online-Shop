@@ -9,12 +9,14 @@
     <h2>Edit User</h2>
 <form action="/users/edit" method="post">
     Email:<br>
-    <input type="email" name="email" value="${oldEmail}">
+    <input type="email" name="email" value=" <c:if test="${oldEmail != null}"><br>${oldEmail}<br> </c:if> ">
     <br>
     Password:<br>
-    <input type="password" name="password" value="${oldPassword}">
+    <input type="password" name="password" value=" <c:if test="${oldPassword != null}"><br>${oldPassword}<br> </c:if> ">
     <br>
-    ${wrong}
+    <c:if test="${wrong != null}">
+        <br>${wrong}<br>
+    </c:if>
     <br>
     <button type="submit">Edit user</button>
 </form>

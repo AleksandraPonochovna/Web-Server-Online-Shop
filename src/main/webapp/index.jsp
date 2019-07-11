@@ -14,7 +14,9 @@
         Password:<br>
         <input type="password" name="password" value="">
         <br>
-        ${not_found}
+        <c:if test="${unknown != null}">
+            <br>${unknown}<br>
+        </c:if>
         <br>
         <input type="submit" value="Sign In">
     </form>

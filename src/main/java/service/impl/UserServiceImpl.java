@@ -17,6 +17,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void addUser(Long id, String email, String password, User.ROLE role) {
+        usersDao.addUser(id, email, password, role);
+    }
+
+    @Override
     public void addUser(User user) {
         usersDao.addUser(user);
     }
@@ -28,21 +33,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        for (User user : usersDao.getAllUsers()) {
-            if (user.getId().equals(id)) {
-                usersDao.getAllUsers().remove(user);
-            }
-        }
+        usersDao.deleteUser(id);
     }
 
     @Override
     public User getById(Long id) {
-        for (User user : usersDao.getAllUsers()) {
-            if (user.getId().equals(id)) {
-                return user;
-            }
-        }
-        return null;
+        return usersDao.getById(id);
+    }
+
+    @Override
+    public boolean userIsExist(String email, String password) {
+        return usersDao.userIsExist(email, password);
+    }
+
+    @Override
+    public User.ROLE getRoleByEmailPassword(String email, String password) {
+        return usersDao.getRoleByEmailPassword(email, password);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        return usersDao.getByEmail(email);
     }
 
 }

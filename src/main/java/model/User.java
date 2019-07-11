@@ -5,11 +5,27 @@ public class User {
     private Long id;
     private String email;
     private String password;
+    private ROLE role;
 
     public User(Long id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
+    }
+
+    public User(Long id, String email, String password, User.ROLE role) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    public ROLE getRole() {
+        return role;
+    }
+
+    public void setRole(ROLE role) {
+        this.role = role;
     }
 
     public Long getId() {
@@ -34,6 +50,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public enum ROLE {
+        ADMIN, USER, UNKNOWN
     }
 
 }
