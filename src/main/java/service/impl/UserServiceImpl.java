@@ -28,21 +28,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        for (User user : usersDao.getAllUsers()) {
-            if (user.getId().equals(id)) {
-                usersDao.getAllUsers().remove(user);
-            }
-        }
+        usersDao.deleteUser(id);
     }
 
     @Override
     public User getById(Long id) {
-        for (User user : usersDao.getAllUsers()) {
-            if (user.getId().equals(id)) {
-                return user;
-            }
-        }
-        return null;
+        return usersDao.getById(id);
     }
 
 }
