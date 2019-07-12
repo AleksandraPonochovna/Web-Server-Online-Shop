@@ -23,7 +23,6 @@ public class DeleteUserServlet extends HttpServlet {
             userService.deleteUser(Long.valueOf(id));
         }
         response.sendRedirect("/users");
-        response.setStatus(HttpServletResponse.SC_OK);
     }
 
 }
