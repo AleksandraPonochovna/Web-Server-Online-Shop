@@ -34,7 +34,6 @@ public class AddProductServlet extends HttpServlet {
             product = new Product(IdGeneratorUtil.getProductId(), name, description, price);
             productService.addProduct(product);
             response.sendRedirect("/products");
-            response.setStatus(HttpServletResponse.SC_OK);
         } catch (NumberFormatException ex) {
             request.setAttribute("valid", "It isn't rightly. Enter the correct values.");
             request.getRequestDispatcher("/add_product.jsp").forward(request, response);
