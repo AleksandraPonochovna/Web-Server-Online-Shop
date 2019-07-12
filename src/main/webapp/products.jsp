@@ -7,8 +7,13 @@
 <body>
 <center>
     <h3>All Products</h3>
+    <c:if test="${role.equals(\"admin\")}">
+        <button><a href="/admin/users"> All Users </a> </button>
+    </c:if>
+    <c:if test="${role.equals(\"user\")}">
+        <h3>Hello, ${email}!</h3>
+    </c:if>
     <button><a href="/add/product"> Add Product </a></button>
-    <button><a href="/users"> All Users </a> </button>
     <table border = 1>
         <tr>
             <th> Name </th>

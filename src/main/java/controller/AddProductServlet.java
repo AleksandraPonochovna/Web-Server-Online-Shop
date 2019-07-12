@@ -1,4 +1,4 @@
-package controller.servlet;
+package controller;
 
 import factory.ProductServiceFactory;
 import org.apache.log4j.Logger;

@@ -21,12 +21,12 @@
             <td>${user.email}</td>
             <td>${user.password}</td>
             <c:if test="${user.id != null}">
-                <td><button><a href="/users/edit?id=${user.id}"> Edit </a></button></td>
-                <td><button><a href="/users/delete?id=${user.id}"> Delete </a></button></td>
+                <td><button><a href="/admin/users/edit?id=${user.id}"> Edit </a></button></td>
+                <td><button><a href="/admin/users/delete?id=${user.id}"> Delete </a></button></td>
             </c:if>
             <c:if test="${user.id == null}">
-                <td><button><a href="/users"> Edit </a></button></td>
-                <td><button><a href="/users"> Delete </a></button></td>
+                <td><button><a href="/admin/users"> Edit </a></button></td>
+                <td><button><a href="/admin/users"> Delete </a></button></td>
             </c:if>
         </tr>
     </c:forEach>

@@ -26,7 +26,7 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     @Override
-    public void addUser(Long id, String email, String password, User.ROLE role) {
+    public void addUser(Long id, String email, String password, String role) {
         user = new User(id, email, password, role);
         Database.users.add(user);
         logger.info("User " + user + "added in DB");
@@ -69,7 +69,7 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     @Override
-    public User.ROLE getRoleByEmailPassword(String email, String password) {
+    public String getRoleByEmailPassword(String email, String password) {
         for (User user : Database.users) {
             if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
                 return user.getRole();

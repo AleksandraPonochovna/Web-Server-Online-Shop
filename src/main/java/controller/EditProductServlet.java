@@ -1,4 +1,4 @@
-package controller.servlet;
+package controller;
 
 import factory.ProductServiceFactory;
 import model.Product;
@@ -38,7 +38,7 @@ public class EditProductServlet extends HttpServlet {
             product.setName(name);
             product.setDescription(description);
             product.setPrice(Double.valueOf(price));
-            request.getRequestDispatcher("/products_for_admin.jsp").forward(request, response);
+            request.getRequestDispatcher("/products.jsp").forward(request, response);
         } catch (NumberFormatException | NullPointerException ex) {
             request.setAttribute("wrong", "Something is wrong. Try again.");
             request.getRequestDispatcher("/edit_product.jsp").forward(request, response);

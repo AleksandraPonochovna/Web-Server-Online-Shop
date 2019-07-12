@@ -10,7 +10,7 @@ public interface UsersDao {
 
     void addUser(Long id, String email, String password);
 
-    void addUser(Long id, String email, String password, User.ROLE role);
+    void addUser(Long id, String email, String password, String role);
 
     List<User> getAllUsers();
 
@@ -20,7 +20,7 @@ public interface UsersDao {
 
     boolean userIsExist(String email, String password);
 
-    User.ROLE getRoleByEmailPassword(String email, String password);
+    String getRoleByEmailPassword(String email, String password);
 
     User getByEmail(String email);
 

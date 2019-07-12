@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(Long id, String email, String password, User.ROLE role) {
+    public void addUser(Long id, String email, String password, String role) {
         usersDao.addUser(id, email, password, role);
     }
 
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User.ROLE getRoleByEmailPassword(String email, String password) {
+    public String  getRoleByEmailPassword(String email, String password) {
         return usersDao.getRoleByEmailPassword(email, password);
     }
 

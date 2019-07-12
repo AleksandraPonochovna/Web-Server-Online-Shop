@@ -1,4 +1,4 @@
-package controller.servlet;
+package controller;
 
 import factory.UserServiceFactory;
 import model.User;
@@ -9,9 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(value = "/users/edit")
+@WebServlet(value = "/admin/users/edit")
 public class EditUserServlet extends HttpServlet {
 
     private static final UserService userService = UserServiceFactory.getUserService();
@@ -36,15 +37,21 @@ public class EditUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        try {
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            user.setEmail(email);
-            user.setPassword(password);
-            request.getRequestDispatcher("/users.jsp").forward(request, response);
-        } catch (NumberFormatException | NullPointerException ex) {
-            request.setAttribute("wrong", "Something is wrong. Try again.");
-            request.getRequestDispatcher("/edit_user.jsp").forward(request, response);
+        final HttpSession session = request.getSession();
+        final String role = (String) session.getAttribute("role");
+        if (role.equals("admin")) {
+            try {
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                user.setEmail(email);
+                user.setPassword(password);
+                request.getRequestDispatcher("/users.jsp").forward(request, response);
+            } catch (NumberFormatException | NullPointerException ex) {
+                request.setAttribute("wrong", "Something is wrong. Try again.");
+                request.getRequestDispatcher("/edit_user.jsp").forward(request, response);
+            }
+        } else {
+            response.sendRedirect("/");
         }
     }
 

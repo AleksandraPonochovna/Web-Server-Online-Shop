@@ -7,7 +7,7 @@
 <body>
 <center>
     <h2>Edit User</h2>
-<form action="/users/edit" method="post">
+<form action="/admin/users/edit" method="post">
     Email:<br>
     <input type="email" name="email" value=" <c:if test="${oldEmail != null}"><br>${oldEmail}<br> </c:if> ">
     <br>
