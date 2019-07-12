@@ -23,7 +23,6 @@ public class DeleteProductServlet extends HttpServlet {
             productService.deleteProduct(Long.valueOf(id));
         }
         response.sendRedirect("/products");
-        response.setStatus(HttpServletResponse.SC_OK);
     }
 
 }
