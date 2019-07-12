@@ -35,7 +35,6 @@ public class AddUserServlet extends HttpServlet {
                 user = new User(IdGeneratorUtil.getUserId(), email, password);
                 userService.addUser(user);
                 response.sendRedirect("/users");
-                response.setStatus(HttpServletResponse.SC_OK);
             } else {
                 request.setAttribute("email", email);
                 request.setAttribute("error", "Your passwors are not equal.");
