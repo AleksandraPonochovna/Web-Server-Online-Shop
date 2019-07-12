@@ -20,7 +20,7 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     public void init() {
-        userService.addUser(0L, "admin@ru", "admin");
+        userService.addUser(IdGeneratorUtil.getUserId(), "admin@ru", "admin");
         logger.info("Test user is added.");
     }
 
