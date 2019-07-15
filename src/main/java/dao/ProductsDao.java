@@ -3,6 +3,7 @@ package dao;
 import model.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductsDao {
 
@@ -14,6 +15,6 @@ public interface ProductsDao {
 
     void deleteProduct(Long id);
 
-    Product getById(Long id);
+    Optional<Product> getById(Long id);
 
 }

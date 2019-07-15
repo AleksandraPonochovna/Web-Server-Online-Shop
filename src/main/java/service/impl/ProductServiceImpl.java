@@ -6,10 +6,11 @@ import model.Product;
 import service.ProductService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ProductServiceImpl implements ProductService {
 
-    private ProductsDao productsDao = ProductDaoFactory.getProductDao();
+    private static final ProductsDao productsDao = ProductDaoFactory.getProductDao();
 
     @Override
     public void addProduct(Product product) {
@@ -32,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getById(Long id) {
+    public Optional<Product> getById(Long id) {
         return productsDao.getById(id);
     }
 

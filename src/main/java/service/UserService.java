@@ -3,6 +3,7 @@ package service;
 import model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -16,11 +17,11 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    User getById(Long id);
+    Optional<User> getById(Long id);
 
     boolean userIsExist(String email, String password);
 
-    String getRoleByEmailPassword(String email, String password);
+    Optional<String> getRoleByEmailPassword(String email, String password);
 
-    User getByEmail(String email);
+    Optional<User> getByEmail(String email);
 }

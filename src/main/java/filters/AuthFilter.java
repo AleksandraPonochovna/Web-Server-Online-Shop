@@ -2,7 +2,6 @@ package filters;
 
 import factory.UserServiceFactory;
 import service.UserService;
-import util.IdGeneratorUtil;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static java.util.Objects.nonNull;
 
@@ -21,8 +21,6 @@ public class AuthFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-        userService.addUser(IdGeneratorUtil.getUserId(), "admin@ru", "admin", "admin");
-        userService.addUser(IdGeneratorUtil.getUserId(), "user@ru", "user", "user");
     }
 
     @Override
@@ -37,22 +35,17 @@ public class AuthFilter implements Filter {
         final String password = req.getParameter("password");
 
         if (nonNull(session) && userService.userIsExist(email, password)) {
-            final String role = userService.getRoleByEmailPassword(email, password);
-            req.getSession().setAttribute("email", email);
-            req.getSession().setAttribute("password", password);
-            req.getSession().setAttribute("role", role);
-            moveToMenu(req, resp, role);
+            Optional<String> optRole = userService.getRoleByEmailPassword(email, password);
+            if (optRole.isPresent()) {
+                String role = optRole.get();
+                if (role.equals("admin")) {
+                    req.getRequestDispatcher("/users.jsp").forward(req, resp);
+                } else if (role.equals("user")) {
+                    req.getRequestDispatcher("/products.jsp").forward(req, resp);
+                }
+            }
         } else {
             req.getRequestDispatcher("/").forward(req, resp);
-        }
-    }
-
-    private void moveToMenu(HttpServletRequest req,
-                            HttpServletResponse resp, String role) throws ServletException, IOException {
-        if (role.equals("admin")) {
-            req.getRequestDispatcher("/users.jsp").forward(req, resp);
-        } else if (role.equals("user")) {
-            req.getRequestDispatcher("/products.jsp").forward(req, resp);
         }
     }
 

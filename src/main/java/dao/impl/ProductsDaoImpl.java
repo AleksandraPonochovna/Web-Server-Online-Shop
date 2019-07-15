@@ -6,6 +6,8 @@ import model.Product;
 import org.apache.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class ProductsDaoImpl implements ProductsDao {
 
@@ -31,21 +33,23 @@ public class ProductsDaoImpl implements ProductsDao {
 
     @Override
     public void deleteProduct(Long id) {
-        Database.products.stream()
+        Optional<Product> optProduct = Database.products.stream()
                 .filter(x -> x.getId().equals(id))
-                .findFirst()
-                .ifPresent(x -> Database.products.remove(x));
-        logger.info("Product with name " + getById(id).getName()  + "removed in db");
+                .findFirst();
+        if (optProduct.isPresent()) {
+            Product productForDelete = optProduct.get();
+            logger.info("Product with name " + productForDelete.getName()  + " removed in db");
+        } else {
+            logger.info("Product for deleting {id = " + id  + "} not found");
+        }
     }
 
     @Override
-    public Product getById(Long id) {
-        for (Product product : Database.products) {
-            if (product.getId().equals(id)) {
-                return product;
-            }
-        }
-        return null;
+    public Optional<Product> getById(Long id) {
+        List<Product> products = getAllProducts();
+        return products.stream()
+                .filter(x -> x.getId().equals(id))
+                .findFirst();
     }
 
 }

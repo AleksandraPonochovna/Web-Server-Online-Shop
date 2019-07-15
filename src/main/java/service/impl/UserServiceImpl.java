@@ -6,10 +6,11 @@ import model.User;
 import service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
-    private UsersDao usersDao = UserDaoFactory.getUserDao();
+    private static final UsersDao usersDao = UserDaoFactory.getUserDao();
 
     @Override
     public void addUser(Long id, String email, String password) {
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(Long id) {
+    public Optional<User> getById(Long id) {
         return usersDao.getById(id);
     }
 
@@ -47,12 +48,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String  getRoleByEmailPassword(String email, String password) {
+    public Optional<String> getRoleByEmailPassword(String email, String password) {
         return usersDao.getRoleByEmailPassword(email, password);
     }
 
     @Override
-    public User getByEmail(String email) {
+    public Optional<User> getByEmail(String email) {
         return usersDao.getByEmail(email);
     }
 
