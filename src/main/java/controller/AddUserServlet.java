@@ -1,6 +1,7 @@
 package controller;
 
 import factory.UserServiceFactory;
+import model.User;
 import org.apache.log4j.Logger;
 import service.UserService;
 import util.IdGeneratorUtil;
@@ -36,13 +37,14 @@ public class AddUserServlet extends HttpServlet {
                 String password = request.getParameter("password");
                 String repeatPassword = request.getParameter("rpassword");
                 if (password.equals(repeatPassword)) {
-                    userService.addUser(IdGeneratorUtil.getUserId(), email, password);
+                    User user =  new User(IdGeneratorUtil.getUserId(), email, password);
+                    session.setAttribute("user", user);
+                    userService.addUser(user);
                     logger.info("User {" + email + " " + password + "} is added in db.");
                     response.sendRedirect("/admin/users");
-                    response.setStatus(HttpServletResponse.SC_OK);
                 } else {
                     request.setAttribute("email", email);
-                    request.setAttribute("passwordsError", "Your passwors are not equal.");
+                    request.setAttribute("passwordsError", "Your passwords are not equal.");
                     logger.info("Passwords {" + password + " " + repeatPassword + "} are not equals.");
                     request.getRequestDispatcher("/add_user.jsp").forward(request, response);
                 }
