@@ -42,12 +42,12 @@ public class AddUserServlet extends HttpServlet {
                     response.setStatus(HttpServletResponse.SC_OK);
                 } else {
                     request.setAttribute("email", email);
-                    request.setAttribute("error", "Your passwors are not equal.");
+                    request.setAttribute("passwordsError", "Your passwors are not equal.");
                     logger.info("Passwords {" + password + " " + repeatPassword + "} are not equals.");
                     request.getRequestDispatcher("/add_user.jsp").forward(request, response);
                 }
             } catch (NumberFormatException ex) {
-                request.setAttribute("valid", "It isn't rightly. Enter the correct values.");
+                request.setAttribute("validFields", "It isn't rightly. Enter the correct values.");
                 request.getRequestDispatcher("/add_user.jsp").forward(request, response);
             }
         } else {

@@ -48,7 +48,7 @@ public class EditProductServlet extends HttpServlet {
                 request.getRequestDispatcher("/products.jsp").forward(request, response);
             }
         } catch (NumberFormatException ex) {
-            request.setAttribute("wrong", "Something is wrong. Try again.");
+            request.setAttribute("validValues", "Something is wrong. Try again.");
             request.getRequestDispatcher("/edit_product.jsp").forward(request, response);
         }
     }

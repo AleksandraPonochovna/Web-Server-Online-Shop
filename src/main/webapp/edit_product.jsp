@@ -17,8 +17,8 @@
         Price:<br>
         <input type="number" step="0.01" name="price" value="${oldPrice}">
         <br>
-        <c:if test="${wrong != null}">
-            <br>${wrong}<br>
+        <c:if test="${validValues != null}">
+            <br>${validValues}<br>
         </c:if>
         <br>
         <button type="submit">Edit product</button>

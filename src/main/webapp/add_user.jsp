@@ -17,12 +17,12 @@
     Repeat password:<br>
     <input type="password" name="rpassword" value="">
     <br>
-    <c:if test="${error != null}">
-        <br>${error}<br>
+    <c:if test="${passwordsError != null}">
+        <br>${passwordsError}<br>
     </c:if>
     <br>
-    <c:if test="${valid != null}">
-        <br>${valid}<br>
+    <c:if test="${validFields != null}">
+        <br>${validFields}<br>
     </c:if>
     <br>
     <button>Add user</button>

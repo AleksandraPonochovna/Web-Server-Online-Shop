@@ -45,6 +45,7 @@ public class AuthFilter implements Filter {
                 }
             }
         } else {
+            req.setAttribute("unknown", "The password or email are wrong. Try again");
             req.getRequestDispatcher("/").forward(req, resp);
         }
     }

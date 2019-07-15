@@ -55,7 +55,7 @@ public class EditUserServlet extends HttpServlet {
                     request.getRequestDispatcher("/users.jsp").forward(request, response);
                 }
             } catch (NumberFormatException ex) {
-                request.setAttribute("wrong", "Something is wrong. Try again.");
+                request.setAttribute("validValues", "Something is wrong. Try again.");
                 request.getRequestDispatcher("/edit_user.jsp").forward(request, response);
             }
         } else {
