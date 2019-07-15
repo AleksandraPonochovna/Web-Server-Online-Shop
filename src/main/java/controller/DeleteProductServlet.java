@@ -19,16 +19,11 @@ public class DeleteProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
         final HttpSession session = request.getSession();
         final String role = (String) session.getAttribute("role");
-        if (role.equals("admin")) {
-            String id = request.getParameter("id");
-            if (id != null) {
-                productService.deleteProduct(Long.valueOf(id));
-            }
-            response.sendRedirect("/products");
-        } else {
-            response.sendRedirect("/");
+        if (id != null) {
+            productService.deleteProduct(Long.valueOf(id));
         }
     }
 
