@@ -1,7 +1,6 @@
 package filters;
 
-import factory.UserServiceFactory;
-import service.UserService;
+import model.User;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -10,48 +9,42 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static java.util.Objects.nonNull;
 
-@WebFilter(urlPatterns = {"/sign", "/admin*"})
+@WebFilter(urlPatterns = "/admin*")
 public class AuthFilter implements Filter {
 
-    private static final UserService userService = UserServiceFactory.getUserService();
+    private FilterConfig filterConfig;
 
     @Override
     public void init(FilterConfig filterConfig) {
+        this.filterConfig = filterConfig;
     }
 
     @Override
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain filterChain) throws ServletException, IOException {
-        final HttpServletRequest req = (HttpServletRequest) request;
-        final HttpServletResponse resp = (HttpServletResponse) response;
+        final HttpServletRequest httpRequest = (HttpServletRequest) request;
+        final HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        final HttpSession session = req.getSession();
-        final String email = req.getParameter("email");
-        final String password = req.getParameter("password");
+        final HttpSession session = httpRequest.getSession();
+        User user = (User) session.getAttribute("user");
 
-        if (nonNull(session) && userService.userIsExist(email, password)) {
-            Optional<String> optRole = userService.getRoleByEmailPassword(email, password);
-            if (optRole.isPresent()) {
-                String role = optRole.get();
-                if (role.equals("admin")) {
-                    req.getRequestDispatcher("/users.jsp").forward(req, resp);
-                } else if (role.equals("user")) {
-                    req.getRequestDispatcher("/products.jsp").forward(req, resp);
-                }
-            }
+        if (nonNull(user) && user.getRole().equals("admin")) {
+            httpRequest.getRequestDispatcher("/users.jsp").forward(httpRequest, httpResponse);
+        } else if (nonNull(user) && user.getRole().equals("user")) {
+            httpRequest.getRequestDispatcher("/products.jsp").forward(httpRequest, httpResponse);
         } else {
-            req.setAttribute("unknown", "The password or email are wrong. Try again");
-            req.getRequestDispatcher("/").forward(req, resp);
+            httpRequest.setAttribute("unknown", "The password or email are wrong. Try again");
+            httpRequest.getRequestDispatcher("/").forward(httpRequest, httpResponse);
         }
     }
 
     @Override
     public void destroy() {
+        filterConfig = null;
     }
 
 }
