@@ -40,25 +40,20 @@ public class EditUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
-        final HttpSession session = request.getSession();
-        final String roleCurrentUser = (String) session.getAttribute("roleCurrentUser");
-        if (roleCurrentUser.equals("admin")) {
-            try {
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                Optional<User> optUser = userService.getByEmail("email");
-                if (optUser.isPresent()) {
-                    User user = optUser.get();
-                    user.setEmail(email);
-                    user.setPassword(password);
-                    request.getRequestDispatcher("/users.jsp").forward(request, response);
-                }
-            } catch (NumberFormatException ex) {
-                request.setAttribute("validValues", "Something is wrong. Try again.");
-                request.getRequestDispatcher("/edit_user.jsp").forward(request, response);
+                          HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            Optional<User> optUser = userService.getByEmail("email");
+            if (optUser.isPresent()) {
+                User user = optUser.get();
+                user.setEmail(email);
+                user.setPassword(password);
+                request.getRequestDispatcher("/users.jsp").forward(request, response);
             }
-        } else {
-            response.sendRedirect("/");
+        } catch (NumberFormatException ex) {
+            request.setAttribute("validValues", "Something is wrong. Try again.");
+            request.getRequestDispatcher("/edit_user.jsp").forward(request, response);
         }
     }
 
