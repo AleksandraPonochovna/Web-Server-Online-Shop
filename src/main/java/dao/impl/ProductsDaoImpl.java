@@ -45,8 +45,7 @@ public class ProductsDaoImpl implements ProductsDao {
 
     @Override
     public Optional<Product> getById(Long id) {
-        List<Product> products = getAllProducts();
-        return products.stream()
+        return Database.products.stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst();
     }
