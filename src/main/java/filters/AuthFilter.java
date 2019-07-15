@@ -13,7 +13,7 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 @WebFilter(urlPatterns = "/admin*")
-public class AuthFilter implements Filter {
+public class AdminFilter implements Filter {
 
     private FilterConfig filterConfig;
 
@@ -33,13 +33,11 @@ public class AuthFilter implements Filter {
         User user = (User) session.getAttribute("user");
 
         if (nonNull(user) && user.getRole().equals("admin")) {
-            httpRequest.getRequestDispatcher("/users.jsp").forward(httpRequest, httpResponse);
-        } else if (nonNull(user) && user.getRole().equals("user")) {
-            httpRequest.getRequestDispatcher("/products.jsp").forward(httpRequest, httpResponse);
+            filterChain.doFilter(request, response);
         } else {
-            httpRequest.setAttribute("unknown", "The password or email are wrong. Try again");
-            httpRequest.getRequestDispatcher("/").forward(httpRequest, httpResponse);
+            httpResponse.sendRedirect("/");
         }
+
     }
 
     @Override
