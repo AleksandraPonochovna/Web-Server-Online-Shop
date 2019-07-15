@@ -15,7 +15,7 @@
     <input type="password" name="password" value=" <c:if test="${oldPassword != null}"><br>${oldPassword}<br> </c:if> ">
     <br>
     <c:if test="${validValues != null}">
-        <br>${validValues}<br>
+        ${validValues}
     </c:if>
     <br>
     <button type="submit">Edit user</button>

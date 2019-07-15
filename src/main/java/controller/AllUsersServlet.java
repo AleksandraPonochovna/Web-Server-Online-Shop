@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 @WebServlet(value = "/admin/users")
 public class AllUsersServlet extends HttpServlet {
 
@@ -22,8 +24,8 @@ public class AllUsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         final HttpSession session = request.getSession();
-        final String role = (String) session.getAttribute("role");
-        if (role.equals("admin")) {
+        User user = (User) session.getAttribute("user");
+        if (nonNull(user) && user.getRole().equals("admin")) {
             List<User> allUsers = userService.getAllUsers();
             request.setAttribute("users", allUsers);
             request.getRequestDispatcher("/users.jsp").forward(request, response);

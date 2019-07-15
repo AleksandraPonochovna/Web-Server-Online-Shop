@@ -18,7 +18,7 @@
     <input name="price" type="number" step="0.01"/> <br>
     <br>
     <c:if test="${validFields != null}">
-        <br>${validFields}<br>
+        ${validFields}
     </c:if>
     <br>
     <button type="submit">Add Product</button>

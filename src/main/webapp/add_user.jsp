@@ -7,7 +7,7 @@
 <body>
 <center>
     <h2>Add User</h2>
-<form action="/add/user" method="post">
+<form action="/admin/add/user" method="post">
     Email:<br>
     <input type="email" name="email" value="${email}">
     <br>
@@ -17,12 +17,14 @@
     Repeat password:<br>
     <input type="password" name="rpassword" value="">
     <br>
-    <c:if test="${passwordsError != null}">
-        <br>${passwordsError}<br>
-    </c:if>
+    <input type="radio" name="role" value="user">User<br>
+    <input type="radio" name="role" value="admin">Admin<br>
     <br>
+    <c:if test="${passwordsError != null}">
+        ${passwordsError}
+    </c:if>
     <c:if test="${validFields != null}">
-        <br>${validFields}<br>
+        ${validFields}
     </c:if>
     <br>
     <button>Add user</button>

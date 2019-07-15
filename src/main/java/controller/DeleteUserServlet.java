@@ -21,8 +21,8 @@ public class DeleteUserServlet extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         final HttpSession session = request.getSession();
-        final String role = (String) session.getAttribute("role");
-        if (role.equals("admin")) {
+        final String roleCurrentUser = (String) session.getAttribute("roleCurrentUser");
+        if (roleCurrentUser.equals("admin")) {
             if (id != null) {
                 userService.deleteUser(Long.valueOf(id));
             }

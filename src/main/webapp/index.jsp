@@ -15,7 +15,7 @@
         <input type="password" name="password" value="">
         <br>
         <c:if test="${unknown != null}">
-            <br>${unknown}<br>
+            ${unknown}
         </c:if>
         <br>
         <input type="submit" value="Sign In">

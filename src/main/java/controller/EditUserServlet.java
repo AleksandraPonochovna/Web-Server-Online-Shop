@@ -25,8 +25,7 @@ public class EditUserServlet extends HttpServlet {
         if (!request.getParameter("id").isEmpty()) {
             Long id = Long.valueOf(request.getParameter("id"));
             optUser = userService.getById(id);
-        }
-        if (!request.getParameter("email").isEmpty()) {
+        } else if (!request.getParameter("email").isEmpty()) {
             String email = request.getParameter("email");
             optUser = userService.getByEmail(email);
         }
@@ -42,8 +41,8 @@ public class EditUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         final HttpSession session = request.getSession();
-        final String role = (String) session.getAttribute("role");
-        if (role.equals("admin")) {
+        final String roleCurrentUser = (String) session.getAttribute("roleCurrentUser");
+        if (roleCurrentUser.equals("admin")) {
             try {
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");

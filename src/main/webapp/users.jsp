@@ -7,7 +7,7 @@
 <body>
 <center>
 <h3>All Users</h3>
-<button><a href="/add/user"> Add user </a></button>
+<button><a href="/admin/add/user"> Add user </a></button>
 <button><a href="/products"> All Products</a> </button>
 <table border = 1>
     <tr>
