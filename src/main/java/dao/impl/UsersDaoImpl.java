@@ -61,8 +61,7 @@ public class UsersDaoImpl implements UsersDao {
     public boolean userIsExist(String email, String password) {
         List<User> users = getAllUsers();
         Optional<User> user = users.stream()
-                .filter(x -> x.getEmail().equals(email))
-                .filter(x -> x.getPassword().equals(password))
+                .filter(x -> x.getEmail().equals(email) && x.getPassword().equals(password))
                 .findFirst();
         return user.isPresent();
     }
@@ -71,8 +70,7 @@ public class UsersDaoImpl implements UsersDao {
     public Optional<String> getRoleByEmailPassword(String email, String password) {
         List<User> users = getAllUsers();
         return users.stream()
-                .filter(user -> user.getEmail().equals(email))
-                .filter(user -> user.getPassword().equals(password))
+                .filter(x -> x.getEmail().equals(email) && x.getPassword().equals(password))
                 .map(User::getRole)
                 .findFirst();
     }
