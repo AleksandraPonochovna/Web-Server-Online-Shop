@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static java.util.Objects.nonNull;
-
 @WebServlet(value = "/admin/users")
 public class AllUsersServlet extends HttpServlet {
 
