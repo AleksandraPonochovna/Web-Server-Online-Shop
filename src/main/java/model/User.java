@@ -52,8 +52,4 @@ public class User {
         this.password = password;
     }
 
-    public enum ROLE {
-        ADMIN, USER, UNKNOWN
-    }
-
 }
