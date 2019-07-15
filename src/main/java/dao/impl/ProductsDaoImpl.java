@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 public class ProductsDaoImpl implements ProductsDao {
 
     private static final Logger logger = Logger.getLogger(ProductsDaoImpl.class);
-    private Product product;
 
     @Override
     public void addProduct(Product product) {
@@ -21,7 +20,7 @@ public class ProductsDaoImpl implements ProductsDao {
 
     @Override
     public void addProduct(Long id, String name, String description, Double price) {
-        product = new Product(id, name, description, price);
+        Product product = new Product(id, name, description, price);
         Database.products.add(product);
         logger.info("Product " + product + "added in DB");
     }
