@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static java.util.Objects.nonNull;
 
-@WebFilter(urlPatterns = "/admin*")
+@WebFilter(urlPatterns = "/admin/*")
 public class AdminFilter implements Filter {
 
     private FilterConfig filterConfig;
