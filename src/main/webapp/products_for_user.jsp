@@ -26,6 +26,7 @@
             </tr>
         </c:forEach>
     </table>
+    <button><a href="/sign"> Log Out </a></button>
 </center>
 </body>
 </html>

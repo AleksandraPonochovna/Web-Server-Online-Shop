@@ -43,6 +43,7 @@
         </c:if>
         <br>
         <button type="submit"> Confirm </button>
+        <button><a href="/sign"> Log Out </a></button>
     </form>
 </center>
 </body>

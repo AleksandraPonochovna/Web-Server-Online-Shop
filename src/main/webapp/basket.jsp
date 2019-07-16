@@ -10,6 +10,12 @@
 <center>
     <h3>Basket</h3>
     <button><a href="/products"> All Products </a></button>
+    <c:if test="${countProductsInBasket == null}">
+        Count of products : 0 <br>
+    </c:if>
+    <c:if test="${countProductsInBasket != null}">
+        Count of products : ${countProductsInBasket} <br>
+    </c:if>
     <table border = 1>
         <tr>
             <th> Name </th>
@@ -25,6 +31,7 @@
         </c:forEach>
     </table>
     <button><a href="/products/basket/buy"> Buy </a></button>
+    <button><a href="/sign"> Log Out </a></button>
 </center>
 </body>
 </html>

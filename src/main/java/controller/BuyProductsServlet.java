@@ -24,6 +24,7 @@ public class BuyProductsServlet extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
         Code code = new Code(RandomHelper.get4DigitCode(), user);
+        request.getSession().setAttribute("code", code);
         mailService.sendOneTimeCode(code);
         request.getRequestDispatcher("/order.jsp").forward(request, response);
     }
@@ -42,7 +43,7 @@ public class BuyProductsServlet extends HttpServlet {
             request.getRequestDispatcher("/order.jsp").forward(request, response);
         } else {
             User user = (User) request.getSession().getAttribute("user");
-            Code code = new Code(RandomHelper.get4DigitCode(), user);
+            Code code = (Code) request.getSession().getAttribute("code");
             if (nonNull(user) && user == code.getUser()) {
                 if (enteredCode.equals(code.getCode())) {
                     request.setAttribute("ok", "Your buying was successful");

@@ -15,8 +15,8 @@ public class User {
         return basket;
     }
 
-    public void setBasket(List<Product> basket) {
-        this.basket = basket;
+    public int getBasketSize() {
+        return basket.size();
     }
 
     public User(Long id, String email, String password) {

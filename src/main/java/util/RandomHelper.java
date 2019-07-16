@@ -1,9 +1,11 @@
 package util;
 
+import java.util.UUID;
+
 public class RandomHelper {
 
     public static String get4DigitCode() {
-        return "123123";
+        return UUID.randomUUID().toString().substring(0,4);
     }
 
 }

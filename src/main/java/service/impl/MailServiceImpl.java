@@ -1,9 +1,7 @@
 package service.impl;
 
 import model.Code;
-import model.User;
 import service.MailService;
-import util.RandomHelper;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -39,7 +37,7 @@ public class MailServiceImpl implements MailService {
                    // InternetAddress.parse(code.getUser().getEmail())
             );
             message.setSubject("One-Time Code for buying");
-            message.setText("Hi! It's your code " + RandomHelper.get4DigitCode());
+            message.setText("Hi! It's your code " + code.getCode());
             Transport.send(message);
         } catch(MessagingException e) {
             e.printStackTrace();
