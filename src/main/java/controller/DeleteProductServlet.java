@@ -22,6 +22,7 @@ public class DeleteProductServlet extends HttpServlet {
         if (id != null) {
             productService.deleteProduct(Long.valueOf(id));
         }
+        response.sendRedirect("/products");
     }
 
 }
