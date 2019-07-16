@@ -2,6 +2,7 @@ package service.impl;
 
 import dao.UsersDao;
 import factory.UserDaoFactory;
+import model.Product;
 import model.User;
 import service.UserService;
 
@@ -55,6 +56,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getByEmail(String email) {
         return usersDao.getByEmail(email);
+    }
+
+    @Override
+    public void addProductInBasket(User user, Product product) {
+        usersDao.addProductInBasket(user, product);
     }
 
 }

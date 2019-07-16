@@ -11,10 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
-import static java.util.Objects.nonNull;
 
 @WebServlet(value = "/admin/add/user")
 public class AddUserServlet extends HttpServlet {
@@ -31,32 +28,27 @@ public class AddUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws IOException, ServletException {
-        final HttpSession session = request.getSession();
-        final String roleCurrentUser = (String) session.getAttribute("roleCurrentUser");
-        if (nonNull(roleCurrentUser) && roleCurrentUser.equals("admin")) {
-            try {
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                String repeatPassword = request.getParameter("rpassword");
-                String role = request.getParameter("role");
-                if (password.equals(repeatPassword)) {
-                    User user =  new User(IdGeneratorUtil.getUserId(), email, password, role);
-                    userService.addUser(user);
-                    logger.info("User {" + email + " " + password + "} is added in db.");
-                    response.sendRedirect("/admin/users");
-                } else {
-                    request.setAttribute("email", email);
-                    request.setAttribute("passwordsError", "Your passwords are not equal.");
-                    logger.info("Passwords {" + password + " " + repeatPassword + "} are not equals.");
-                    request.getRequestDispatcher("/add_user.jsp").forward(request, response);
-                }
-            } catch (NumberFormatException ex) {
-                request.setAttribute("validFields", "It isn't rightly. Enter the correct values.");
+        try {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String repeatPassword = request.getParameter("rpassword");
+            String role = request.getParameter("role");
+            if (password.equals(repeatPassword)) {
+                User user = new User(IdGeneratorUtil.getUserId(), email, password, role);
+                userService.addUser(user);
+                logger.info("User {" + email + " " + password + "} is added in db.");
+                response.sendRedirect("/admin/users");
+            } else {
+                request.setAttribute("email", email);
+                request.setAttribute("passwordsError", "Your passwords are not equal.");
+                logger.info("Passwords {" + password + " " + repeatPassword + "} are not equals.");
                 request.getRequestDispatcher("/add_user.jsp").forward(request, response);
             }
-        } else {
-            response.sendRedirect("/");
+        } catch (NumberFormatException ex) {
+            request.setAttribute("validFields", "It isn't rightly. Enter the correct values.");
+            request.getRequestDispatcher("/add_user.jsp").forward(request, response);
         }
     }
 
 }
+

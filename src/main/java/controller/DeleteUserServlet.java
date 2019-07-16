@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(value = "/admin/users/delete")
@@ -20,16 +19,10 @@ public class DeleteUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-        final HttpSession session = request.getSession();
-        final String roleCurrentUser = (String) session.getAttribute("roleCurrentUser");
-        if (roleCurrentUser.equals("admin")) {
-            if (id != null) {
-                userService.deleteUser(Long.valueOf(id));
-            }
-            response.sendRedirect("/admin/users");
-        } else {
-            response.sendRedirect("/");
+        if (id != null) {
+            userService.deleteUser(Long.valueOf(id));
         }
+        response.sendRedirect("/admin/users");
     }
-
 }
+

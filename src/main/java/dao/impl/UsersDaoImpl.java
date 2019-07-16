@@ -2,6 +2,7 @@ package dao.impl;
 
 import dao.UsersDao;
 import database.Database;
+import model.Product;
 import model.User;
 import org.apache.log4j.Logger;
 
@@ -51,38 +52,38 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public Optional<User> getById(Long id) {
-        List<User> users = getAllUsers();
-        return users.stream()
+        return Database.users.stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst();
     }
 
     @Override
     public boolean userIsExist(String email, String password) {
-        List<User> users = getAllUsers();
-        Optional<User> user = users.stream()
-                .filter(x -> x.getEmail().equals(email))
-                .filter(x -> x.getPassword().equals(password))
+        Optional<User> user = Database.users.stream()
+                .filter(x -> x.getEmail().equals(email) && x.getPassword().equals(password))
                 .findFirst();
         return user.isPresent();
     }
 
     @Override
     public Optional<String> getRoleByEmailPassword(String email, String password) {
-        List<User> users = getAllUsers();
-        return users.stream()
-                .filter(user -> user.getEmail().equals(email))
-                .filter(user -> user.getPassword().equals(password))
+        return Database.users.stream()
+                .filter(x -> x.getEmail().equals(email) && x.getPassword().equals(password))
                 .map(User::getRole)
                 .findFirst();
     }
 
     @Override
     public Optional<User> getByEmail(String email) {
-        List<User> users = getAllUsers();
-        return users.stream()
+        return Database.users.stream()
                 .filter(user -> user.getEmail().equals(email))
                 .findFirst();
+    }
+
+    @Override
+    public void addProductInBasket(User user, Product product) {
+        List<Product> productsInBasket = user.getBasket();
+        productsInBasket.add(product);
     }
 
 }

@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 public class ProductsDaoImpl implements ProductsDao {
 
     private static final Logger logger = Logger.getLogger(ProductsDaoImpl.class);
-    private Product product;
 
     @Override
     public void addProduct(Product product) {
@@ -21,7 +20,7 @@ public class ProductsDaoImpl implements ProductsDao {
 
     @Override
     public void addProduct(Long id, String name, String description, Double price) {
-        product = new Product(id, name, description, price);
+        Product product = new Product(id, name, description, price);
         Database.products.add(product);
         logger.info("Product " + product + "added in DB");
     }
@@ -33,21 +32,19 @@ public class ProductsDaoImpl implements ProductsDao {
 
     @Override
     public void deleteProduct(Long id) {
-        Optional<Product> optProduct = Database.products.stream()
-                .filter(x -> x.getId().equals(id))
-                .findFirst();
+        Optional<Product> optProduct = getById(id);
         if (optProduct.isPresent()) {
             Product productForDelete = optProduct.get();
-            logger.info("Product with name " + productForDelete.getName()  + " removed in db");
+            Database.products.remove(productForDelete);
+            logger.info("Product with name " + productForDelete.getName() + " removed in db");
         } else {
-            logger.info("Product for deleting {id = " + id  + "} not found");
+            logger.info("Product for deleting {id = " + id + "} not found");
         }
     }
 
     @Override
     public Optional<Product> getById(Long id) {
-        List<Product> products = getAllProducts();
-        return products.stream()
+        return Database.products.stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst();
     }

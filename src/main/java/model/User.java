@@ -1,11 +1,23 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
     private Long id;
     private String email;
     private String password;
     private String role;
+    private List<Product> basket = new ArrayList<>();
+
+    public List<Product> getBasket() {
+        return basket;
+    }
+
+    public void setBasket(List<Product> basket) {
+        this.basket = basket;
+    }
 
     public User(Long id, String email, String password) {
         this.id = id;

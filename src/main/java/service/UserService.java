@@ -1,5 +1,6 @@
 package service;
 
+import model.Product;
 import model.User;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface UserService {
     Optional<String> getRoleByEmailPassword(String email, String password);
 
     Optional<User> getByEmail(String email);
+
+    void addProductInBasket(User user, Product product);
 }

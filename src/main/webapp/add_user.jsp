@@ -19,7 +19,7 @@
     <br>
     <input type="radio" name="role" value="user">User<br>
     <input type="radio" name="role" value="admin">Admin<br>
-    <br>
+    <br><br>
     <c:if test="${passwordsError != null}">
         ${passwordsError}
     </c:if>
