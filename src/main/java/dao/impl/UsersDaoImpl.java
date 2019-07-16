@@ -51,16 +51,14 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public Optional<User> getById(Long id) {
-        List<User> users = getAllUsers();
-        return users.stream()
+        return Database.users.stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst();
     }
 
     @Override
     public boolean userIsExist(String email, String password) {
-        List<User> users = getAllUsers();
-        Optional<User> user = users.stream()
+        Optional<User> user = Database.users.stream()
                 .filter(x -> x.getEmail().equals(email) && x.getPassword().equals(password))
                 .findFirst();
         return user.isPresent();
@@ -68,8 +66,7 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public Optional<String> getRoleByEmailPassword(String email, String password) {
-        List<User> users = getAllUsers();
-        return users.stream()
+        return Database.users.stream()
                 .filter(x -> x.getEmail().equals(email) && x.getPassword().equals(password))
                 .map(User::getRole)
                 .findFirst();
@@ -77,8 +74,7 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public Optional<User> getByEmail(String email) {
-        List<User> users = getAllUsers();
-        return users.stream()
+        return Database.users.stream()
                 .filter(user -> user.getEmail().equals(email))
                 .findFirst();
     }
