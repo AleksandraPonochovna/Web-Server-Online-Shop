@@ -32,14 +32,13 @@ public class ProductsDaoImpl implements ProductsDao {
 
     @Override
     public void deleteProduct(Long id) {
-        Optional<Product> optProduct = Database.products.stream()
-                .filter(x -> x.getId().equals(id))
-                .findFirst();
+        Optional<Product> optProduct = getById(id);
         if (optProduct.isPresent()) {
             Product productForDelete = optProduct.get();
-            logger.info("Product with name " + productForDelete.getName()  + " removed in db");
+            Database.products.remove(productForDelete);
+            logger.info("Product with name " + productForDelete.getName() + " removed in db");
         } else {
-            logger.info("Product for deleting {id = " + id  + "} not found");
+            logger.info("Product for deleting {id = " + id + "} not found");
         }
     }
 
