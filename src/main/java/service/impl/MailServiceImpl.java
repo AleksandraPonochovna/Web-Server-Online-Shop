@@ -33,8 +33,7 @@ public class MailServiceImpl implements MailService {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse("alexandra.ponochovna@gmail.com")
-                   // InternetAddress.parse(code.getUser().getEmail())
+                    InternetAddress.parse(code.getUser().getEmail())
             );
             message.setSubject("One-Time Code for buying");
             message.setText("Hi! It's your code " + code.getCode());
