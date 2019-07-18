@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class ProductsDaoImpl implements ProductsDao {
 

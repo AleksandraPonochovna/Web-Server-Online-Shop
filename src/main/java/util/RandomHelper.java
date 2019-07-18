@@ -1,11 +1,9 @@
 package util;
 
-import java.util.UUID;
-
 public class RandomHelper {
 
     public static String getFourDigitCode() {
-        return UUID.randomUUID().toString().substring(0,4);
+        return String.valueOf((Math.random() * 9999 + 1000));
     }
 
 }

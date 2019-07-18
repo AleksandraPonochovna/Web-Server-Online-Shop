@@ -32,7 +32,4 @@ public class Basket {
         return basket.size();
     }
 
-    public void refreshBasket(){
-        basket = new ArrayList<>();
-    }
 }

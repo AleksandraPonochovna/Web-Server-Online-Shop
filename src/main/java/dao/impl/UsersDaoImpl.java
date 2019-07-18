@@ -2,7 +2,6 @@ package dao.impl;
 
 import dao.UsersDao;
 import database.Database;
-import model.Product;
 import model.User;
 import org.apache.log4j.Logger;
 

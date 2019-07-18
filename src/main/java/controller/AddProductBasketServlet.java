@@ -1,16 +1,11 @@
 package controller;
 
 import factory.BasketServiceFactory;
-import factory.OrderServiceFactory;
 import factory.ProductServiceFactory;
-import factory.UserServiceFactory;
-import model.Basket;
 import model.Product;
 import model.User;
 import service.BasketService;
-import service.OrderService;
 import service.ProductService;
-import service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

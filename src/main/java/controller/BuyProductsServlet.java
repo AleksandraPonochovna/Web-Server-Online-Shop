@@ -43,7 +43,7 @@ public class BuyProductsServlet extends HttpServlet {
         String houseNumber = request.getParameter("house");
         String enteredCode = request.getParameter("code");
         if (firstName.isEmpty() || lastName.isEmpty() || numberOfPhone.isEmpty() || streetName.isEmpty()
-                || houseNumber.isEmpty() ||  enteredCode.isEmpty()) {
+                || houseNumber.isEmpty() || enteredCode.isEmpty()) {
             request.setAttribute("valid", "The fields is valid");
             request.getRequestDispatcher("/order.jsp").forward(request, response);
         } else {

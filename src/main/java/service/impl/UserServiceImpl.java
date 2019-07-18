@@ -2,7 +2,6 @@ package service.impl;
 
 import dao.UsersDao;
 import factory.UserDaoFactory;
-import model.Product;
 import model.User;
 import service.UserService;
 
