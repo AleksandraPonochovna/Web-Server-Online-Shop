@@ -80,10 +80,4 @@ public class UsersDaoImpl implements UsersDao {
                 .findFirst();
     }
 
-    @Override
-    public void addProductInBasket(User user, Product product) {
-        List<Product> productsInBasket = user.getBasket();
-        productsInBasket.add(product);
-    }
-
 }

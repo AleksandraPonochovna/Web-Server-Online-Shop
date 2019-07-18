@@ -58,9 +58,4 @@ public class UserServiceImpl implements UserService {
         return usersDao.getByEmail(email);
     }
 
-    @Override
-    public void addProductInBasket(User user, Product product) {
-        usersDao.addProductInBasket(user, product);
-    }
-
 }

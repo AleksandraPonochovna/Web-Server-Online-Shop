@@ -3,11 +3,11 @@ package model;
 public class Code {
 
     private String code;
-    private User user;
+    private Order order;
 
-    public Code(String code, User user) {
+    public Code(String code, Order order) {
         this.code = code;
-        this.user = user;
+        this.order = order;
     }
 
     public String getCode() {
@@ -18,11 +18,11 @@ public class Code {
         this.code = code;
     }
 
-    public User getUser() {
-        return user;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

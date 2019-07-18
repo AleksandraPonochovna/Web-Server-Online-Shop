@@ -1,9 +1,14 @@
 package controller;
 
+import factory.BasketServiceFactory;
+import factory.OrderServiceFactory;
 import factory.ProductServiceFactory;
 import factory.UserServiceFactory;
+import model.Basket;
 import model.Product;
 import model.User;
+import service.BasketService;
+import service.OrderService;
 import service.ProductService;
 import service.UserService;
 
@@ -19,8 +24,8 @@ import java.util.Optional;
 @WebServlet("/products/basket")
 public class AddProductBasketServlet extends HttpServlet {
 
-    private static final UserService userService = UserServiceFactory.getUserService();
     private static final ProductService productService = ProductServiceFactory.getProductService();
+    private static final BasketService basketService = BasketServiceFactory.getBasketService();
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -32,13 +37,15 @@ public class AddProductBasketServlet extends HttpServlet {
             User user = (User) session.getAttribute("user");
             if (optProduct.isPresent()) {
                 Product product = optProduct.get();
-                userService.addProductInBasket(user, product);
-                request.setAttribute("countProductsInBasket", user.getBasketSize());
-                request.setAttribute("productsInBasket", user.getBasket());
+                basketService.createBasket(user);
+                basketService.addProductInBasket(user.getId(), product);
+                request.setAttribute("countProductsInBasket", basketService.get(user.getId()).getBasketSize());
+                request.setAttribute("productsInBasket", basketService.get(user.getId()).getBasket());
                 request.getRequestDispatcher("/basket.jsp").forward(request, response);
             }
         } else {
             request.getRequestDispatcher("/basket.jsp").forward(request, response);
         }
     }
+
 }

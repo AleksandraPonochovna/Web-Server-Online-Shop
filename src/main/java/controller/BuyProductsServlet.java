@@ -1,9 +1,15 @@
 package controller;
 
+import factory.BasketServiceFactory;
 import factory.MailServiceFactory;
+import factory.OrderServiceFactory;
 import model.Code;
+import model.Order;
 import model.User;
+import service.BasketService;
 import service.MailService;
+import service.OrderService;
+import util.IdGeneratorUtil;
 import util.RandomHelper;
 
 import javax.servlet.ServletException;
@@ -19,13 +25,12 @@ import static java.util.Objects.nonNull;
 public class BuyProductsServlet extends HttpServlet {
 
     private static final MailService mailService = MailServiceFactory.getMailService();
+    private static final OrderService orderService = OrderServiceFactory.getOrdertService();
+    private static final BasketService basketService = BasketServiceFactory.getBasketService();
+
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
-        Code code = new Code(RandomHelper.get4DigitCode(), user);
-        request.getSession().setAttribute("code", code);
-        mailService.sendOneTimeCode(code);
         request.getRequestDispatcher("/order.jsp").forward(request, response);
     }
 
@@ -43,14 +48,21 @@ public class BuyProductsServlet extends HttpServlet {
             request.getRequestDispatcher("/order.jsp").forward(request, response);
         } else {
             User user = (User) request.getSession().getAttribute("user");
-            Code code = (Code) request.getSession().getAttribute("code");
-            if (nonNull(user) && user == code.getUser()) {
-                if (enteredCode.equals(code.getCode())) {
-                    request.setAttribute("ok", "Your buying was successful");
-                    request.getRequestDispatcher("/order.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("wrongCode", "The code is wrong. Try again");
-                    request.getRequestDispatcher("/order.jsp").forward(request, response);
+            if (nonNull(user)) {
+                Order order = new Order(IdGeneratorUtil.getOrderId(), firstName, lastName, numberOfPhone, streetName,
+                        houseNumber, enteredCode, basketService.get(user.getId()), user);
+                Code code = new Code(RandomHelper.getFourDigitCode(), order);
+                mailService.sendOneTimeCode(code);
+                basketService.createBasket(user);
+                if (user == order.getUser()) {
+                    if (enteredCode.equals(code.getCode())) {
+                        orderService.addOrder(order);
+                        request.setAttribute("ok", "Your buying was successful");
+                        request.getRequestDispatcher("/order.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("wrongCode", "The code is wrong. Try again");
+                        request.getRequestDispatcher("/order.jsp").forward(request, response);
+                    }
                 }
             }
         }

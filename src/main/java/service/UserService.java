@@ -26,5 +26,4 @@ public interface UserService {
 
     Optional<User> getByEmail(String email);
 
-    void addProductInBasket(User user, Product product);
 }

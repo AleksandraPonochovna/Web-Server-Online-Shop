@@ -1,22 +1,19 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
 
     private Long id;
     private String email;
     private String password;
     private String role;
-    private List<Product> basket = new ArrayList<>();
+    private Code code;
 
-    public List<Product> getBasket() {
-        return basket;
+    public Code getCode() {
+        return code;
     }
 
-    public int getBasketSize() {
-        return basket.size();
+    public void setCode(Code code) {
+        this.code = code;
     }
 
     public User(Long id, String email, String password) {
@@ -62,10 +59,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public enum ROLE {
-        ADMIN, USER, UNKNOWN
     }
 
 }

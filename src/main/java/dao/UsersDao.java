@@ -26,6 +26,4 @@ public interface UsersDao {
 
     Optional<User> getByEmail(String email);
 
-    void addProductInBasket(User user, Product product);
-
 }
