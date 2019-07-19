@@ -49,9 +49,9 @@ public class BuyProductsServlet extends HttpServlet {
         } else {
             User user = (User) request.getSession().getAttribute("user");
             if (nonNull(user)) {
+                Code code = new Code(RandomHelper.getFourDigitCode());
                 Order order = new Order(IdGeneratorUtil.getOrderId(), firstName, lastName, numberOfPhone, streetName,
-                        houseNumber, enteredCode, basketService.get(user.getId()), user);
-                Code code = new Code(RandomHelper.getFourDigitCode(), order);
+                        houseNumber, enteredCode, basketService.get(user.getId()), user, code);
                 mailService.sendOneTimeCode(code);
                 basketService.createBasket(user);
                 if (user == order.getUser()) {
@@ -69,3 +69,4 @@ public class BuyProductsServlet extends HttpServlet {
     }
 
 }
+
