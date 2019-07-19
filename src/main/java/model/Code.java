@@ -3,11 +3,9 @@ package model;
 public class Code {
 
     private String code;
-    private Order order;
 
-    public Code(String code, Order order) {
+    public Code(String code) {
         this.code = code;
-        this.order = order;
     }
 
     public String getCode() {
@@ -17,12 +15,5 @@ public class Code {
     public void setCode(String code) {
         this.code = code;
     }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
+  
 }
