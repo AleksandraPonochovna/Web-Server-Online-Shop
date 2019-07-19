@@ -6,15 +6,6 @@ public class User {
     private String email;
     private String password;
     private String role;
-    private Code code;
-
-    public Code getCode() {
-        return code;
-    }
-
-    public void setCode(Code code) {
-        this.code = code;
-    }
 
     public User(Long id, String email, String password) {
         this.id = id;
