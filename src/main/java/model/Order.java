@@ -11,9 +11,10 @@ public class Order {
     private String enteredCode;
     private Basket basket;
     private User user;
+    private Code code;
 
     public Order(Long id, String firstName, String lastName, String numberOfPhone, String streetName,
-                 String houseNumber, String enteredCode, Basket basket, User user) {
+                 String houseNumber, String enteredCode, Basket basket, User user, Code code) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +24,15 @@ public class Order {
         this.enteredCode = enteredCode;
         this.basket = basket;
         this.user = user;
+        this.code = code;
+    }
+
+    public Code getCode() {
+        return code;
+    }
+
+    public void setCode(Code code) {
+        this.code = code;
     }
 
     public Long getId() {
