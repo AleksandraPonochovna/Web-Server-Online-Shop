@@ -77,7 +77,7 @@ public class BasketDaoImpl implements BasketDao {
 
     @Override
     public Basket getBasket(User user) {
-        return null;
+        return null; //some implementation
     }
 
 }
