@@ -7,6 +7,8 @@ import model.Product;
 import model.User;
 import service.BasketService;
 
+import java.util.List;
+
 public class BasketServiceImpl implements BasketService {
 
     private static final BasketDao basketDao = BasketDaoFactory.getBasketDao();
@@ -22,8 +24,18 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public Basket get(Long id) {
-        return basketDao.get(id);
+    public List<Product> getProducts(User user) {
+        return basketDao.getProducts(user);
+    }
+
+    @Override
+    public int getCountProducts(User user) {
+        return basketDao.getCountProducts(user);
+    }
+
+    @Override
+    public Basket getBasket(User user) {
+        return basketDao.getBasket(user);
     }
 
 }

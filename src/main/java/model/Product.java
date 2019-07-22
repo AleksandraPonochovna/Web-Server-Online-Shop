@@ -5,10 +5,16 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private Double price;
+    private Float price;
 
-    public Product(Long id, String name, String description, Double price) {
+    public Product(Long id, String name, String description, Float price) {
         this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    public Product(String name, String description, Float price) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -38,12 +44,21 @@ public class Product {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

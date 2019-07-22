@@ -13,13 +13,8 @@ public class UserServiceImpl implements UserService {
     private static final UsersDao usersDao = UserDaoFactory.getUserDao();
 
     @Override
-    public void addUser(Long id, String email, String password) {
-        usersDao.addUser(id, email, password);
-    }
-
-    @Override
-    public void addUser(Long id, String email, String password, String role) {
-        usersDao.addUser(id, email, password, role);
+    public void addUser(String email, String password, String role) {
+        usersDao.addUser(email, password, role);
     }
 
     @Override
@@ -55,6 +50,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getByEmail(String email) {
         return usersDao.getByEmail(email);
+    }
+
+    @Override
+    public void editUser(User user, String newEmail, String newPassword) {
+        usersDao.editUser(user, newEmail, newPassword);
     }
 
 }

@@ -9,12 +9,16 @@ public interface ProductService {
 
     void addProduct(Product product);
 
-    void addProduct(Long id, String name, String description, Double price);
+    void addProduct(String name, String description, Float price);
 
     List<Product> getAllProducts();
 
     void deleteProduct(Long id);
 
     Optional<Product> getById(Long id);
+
+    Long getIdProduct(Product product);
+
+    void editProduct(Product product, String newName, String newDesc, Float newPrice);
 
 }

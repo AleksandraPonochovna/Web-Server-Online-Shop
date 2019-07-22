@@ -7,18 +7,18 @@
 <body>
 <center>
     <h2>Edit User</h2>
-<form action="/admin/users/edit" method="post">
+<form action="/admin/users/edit?id=${param["id"]}" method="post">
     Email:<br>
-    <input type="email" name="email" value=" <c:if test="${oldEmail != null}"><br>${oldEmail}<br> </c:if> ">
+    <input type="email" name="email" value=" <c:if test="${oldEmail != null}">${oldEmail}</c:if> ">
     <br>
     Password:<br>
-    <input type="password" name="password" value=" <c:if test="${oldPassword != null}"><br>${oldPassword}<br> </c:if> ">
+    <input type="password" name="password" value=" <c:if test="${oldPassword != null}">${oldPassword}</c:if> ">
     <br>
     <c:if test="${validValues != null}">
         ${validValues}
     </c:if>
     <br>
-    <button type="submit">Edit user</button>
+    <input type="submit" value="Edit user">
 </form>
 </center>
 </body>

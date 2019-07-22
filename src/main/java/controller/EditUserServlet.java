@@ -2,6 +2,7 @@ package controller;
 
 import factory.UserServiceFactory;
 import model.User;
+import org.apache.log4j.Logger;
 import service.UserService;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class EditUserServlet extends HttpServlet {
 
     private static final UserService userService = UserServiceFactory.getUserService();
+    private static final Logger logger = Logger.getLogger(EditUserServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -24,9 +26,11 @@ public class EditUserServlet extends HttpServlet {
         if (!request.getParameter("id").isEmpty()) {
             Long id = Long.valueOf(request.getParameter("id"));
             optUser = userService.getById(id);
+            request.setAttribute("id", id);
         } else if (!request.getParameter("email").isEmpty()) {
             String email = request.getParameter("email");
             optUser = userService.getByEmail(email);
+            request.setAttribute("email", email);
         }
         if (optUser.isPresent()) {
             User user = optUser.get();
@@ -40,17 +44,19 @@ public class EditUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         try {
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            Optional<User> optUser = userService.getByEmail("email");
-            if (optUser.isPresent()) {
-                User user = optUser.get();
-                user.setEmail(email);
-                user.setPassword(password);
-                request.getRequestDispatcher("/users.jsp").forward(request, response);
+            if (request.getParameter("id") != null) {
+                Long id = Long.valueOf(request.getParameter("id"));
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                Optional<User> optUser = userService.getById(id);
+                if (optUser.isPresent()) {
+                    User user = optUser.get();
+                    userService.editUser(user, email, password);
+                    response.sendRedirect("/admin/users");
+                }
             }
         } catch (NumberFormatException ex) {
-            request.setAttribute("validValues", "Something is wrong. Try again.");
+            request.setAttribute("validValues", "Something is wrong. Try again. ");
             request.getRequestDispatcher("/edit_user.jsp").forward(request, response);
         }
     }

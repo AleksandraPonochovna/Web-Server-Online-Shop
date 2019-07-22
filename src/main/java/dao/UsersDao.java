@@ -9,9 +9,7 @@ public interface UsersDao {
 
     void addUser(User user);
 
-    void addUser(Long id, String email, String password);
-
-    void addUser(Long id, String email, String password, String role);
+    void addUser(String email, String password, String role);
 
     List<User> getAllUsers();
 
@@ -24,5 +22,7 @@ public interface UsersDao {
     Optional<String> getRoleByEmailPassword(String email, String password);
 
     Optional<User> getByEmail(String email);
+
+    void editUser(User user, String newEmail, String newPassword);
 
 }

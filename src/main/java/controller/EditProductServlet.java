@@ -20,14 +20,16 @@ public class EditProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        Long id = Long.valueOf(request.getParameter("id"));
-        Optional<Product> optProduct = productService.getById(id);
-        if (optProduct.isPresent()) {
-            Product product = optProduct.get();
-            request.setAttribute("oldName", product.getName());
-            request.setAttribute("oldDescription", product.getDescription());
-            request.setAttribute("oldPrice", product.getPrice());
-            request.getRequestDispatcher("/edit_product.jsp").forward(request, response);
+        if (request.getParameter("id") != null) {
+            Long id = Long.valueOf(request.getParameter("id"));
+            Optional<Product> optProduct = productService.getById(id);
+            if (optProduct.isPresent()) {
+                Product product = optProduct.get();
+                request.setAttribute("oldName", product.getName());
+                request.setAttribute("oldDescription", product.getDescription());
+                request.setAttribute("oldPrice", product.getPrice());
+                request.getRequestDispatcher("/edit_product.jsp").forward(request, response);
+            }
         }
     }
 
@@ -35,17 +37,17 @@ public class EditProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         try {
-            Long id = Long.valueOf(request.getParameter("id"));
-            String name = request.getParameter("name");
-            String description = request.getParameter("description");
-            String price = request.getParameter("price");
-            Optional<Product> optProduct = productService.getById(id);
-            if (optProduct.isPresent()) {
-                Product product = optProduct.get();
-                product.setName(name);
-                product.setDescription(description);
-                product.setPrice(Double.valueOf(price));
-                request.getRequestDispatcher("/products.jsp").forward(request, response);
+            if (request.getParameter("id") != null) {
+                Long id = Long.valueOf(request.getParameter("id"));
+                String name = request.getParameter("name");
+                String description = request.getParameter("description");
+                Float price = Float.valueOf(request.getParameter("price"));
+                Optional<Product> optProduct = productService.getById(id);
+                if (optProduct.isPresent()) {
+                    Product product = optProduct.get();
+                    productService.editProduct(product, name, description, price);
+                    response.sendRedirect("/products");
+                }
             }
         } catch (NumberFormatException ex) {
             request.setAttribute("validValues", "Something is wrong. Try again.");

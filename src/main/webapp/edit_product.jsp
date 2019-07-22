@@ -7,7 +7,7 @@
 <body>
 <center>
     <h2>Edit Product</h2>
-    <form action="/products/edit" method="post">
+    <form action="/products/edit?id=${param["id"]}" method="post">
         Name:<br>
         <input type="text" name="name" value="${oldName}">
         <br>

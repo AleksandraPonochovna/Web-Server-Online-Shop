@@ -2,6 +2,7 @@ package controller;
 
 import factory.BasketServiceFactory;
 import factory.ProductServiceFactory;
+import model.Basket;
 import model.Product;
 import model.User;
 import service.BasketService;
@@ -34,8 +35,8 @@ public class AddProductBasketServlet extends HttpServlet {
                 Product product = optProduct.get();
                 basketService.createBasket(user);
                 basketService.addProductInBasket(user.getId(), product);
-                request.setAttribute("countProductsInBasket", basketService.get(user.getId()).getBasketSize());
-                request.setAttribute("productsInBasket", basketService.get(user.getId()).getBasket());
+                request.setAttribute("countProductsInBasket", basketService.getCountProducts(user));
+                request.setAttribute("productsInBasket", basketService.getProducts(user));
                 request.getRequestDispatcher("/basket.jsp").forward(request, response);
             }
         } else {

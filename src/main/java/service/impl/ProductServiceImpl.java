@@ -18,8 +18,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProduct(Long id, String name, String description, Double price) {
-        productsDao.addProduct(id, name, description, price);
+    public void addProduct(String name, String description, Float price) {
+        productsDao.addProduct(name, description, price);
     }
 
     @Override
@@ -35,6 +35,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Product> getById(Long id) {
         return productsDao.getById(id);
+    }
+
+    @Override
+    public Long getIdProduct(Product product) {
+        return productsDao.getIdProduct(product);
+    }
+
+    @Override
+    public void editProduct(Product product, String newName, String newDesc, Float newPrice) {
+        productsDao.editProduct(product, newName, newDesc, newPrice);
     }
 
 }

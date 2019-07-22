@@ -4,7 +4,6 @@ import factory.UserServiceFactory;
 import model.User;
 import org.apache.log4j.Logger;
 import service.UserService;
-import util.IdGeneratorUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,9 +33,8 @@ public class AddUserServlet extends HttpServlet {
             String repeatPassword = request.getParameter("rpassword");
             String role = request.getParameter("role");
             if (password.equals(repeatPassword)) {
-                User user = new User(IdGeneratorUtil.getUserId(), email, password, role);
+                User user = new User(email, password, role);
                 userService.addUser(user);
-                logger.info("User {" + email + " " + password + "} is added in db.");
                 response.sendRedirect("/admin/users");
             } else {
                 request.setAttribute("email", email);

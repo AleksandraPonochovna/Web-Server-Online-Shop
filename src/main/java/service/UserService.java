@@ -1,6 +1,5 @@
 package service;
 
-import model.Product;
 import model.User;
 
 import java.util.List;
@@ -10,9 +9,7 @@ public interface UserService {
 
     void addUser(User user);
 
-    void addUser(Long id, String email, String password);
-
-    void addUser(Long id, String email, String password, String role);
+    void addUser(String email, String password, String role);
 
     List<User> getAllUsers();
 
@@ -25,5 +22,7 @@ public interface UserService {
     Optional<String> getRoleByEmailPassword(String email, String password);
 
     Optional<User> getByEmail(String email);
+
+    void editUser(User user, String newEmail, String newPassword);
 
 }

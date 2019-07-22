@@ -1,12 +1,14 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Basket {
 
+    private Long id;
     private User user;
-    private List<Product> basket = new ArrayList<>();
+
+    public Basket(Long id, User user) {
+        this.id = id;
+        this.user = user;
+    }
 
     public Basket(User user) {
         this.user = user;
@@ -18,18 +20,6 @@ public class Basket {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<Product> getBasket() {
-        return basket;
-    }
-
-    public void setBasket(List<Product> basket) {
-        this.basket = basket;
-    }
-
-    public int getBasketSize() {
-        return basket.size();
     }
 
 }

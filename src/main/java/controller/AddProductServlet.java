@@ -16,7 +16,6 @@ import java.io.IOException;
 public class AddProductServlet extends HttpServlet {
 
     private static final ProductService productService = ProductServiceFactory.getProductService();
-    private static final Logger logger = Logger.getLogger(AddProductServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -30,11 +29,9 @@ public class AddProductServlet extends HttpServlet {
         try {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
-            Double price = Double.valueOf(request.getParameter("price"));
-            productService.addProduct(IdGeneratorUtil.getProductId(), name, description, price);
-            logger.info("Product {" + name + " " + price + "} is added in db.");
+            Float price = Float.valueOf(request.getParameter("price"));
+            productService.addProduct(name, description, price);
             response.sendRedirect("/products");
-            response.setStatus(HttpServletResponse.SC_OK);
         } catch (NumberFormatException ex) {
             request.setAttribute("validFields", "It isn't rightly. Enter the correct values.");
             request.getRequestDispatcher("/add_product.jsp").forward(request, response);
