@@ -9,8 +9,6 @@ public interface OrderService {
 
     void addOrder(Order order);
 
-    Long getBasketIdForOrder(Order order);
-
     Optional<Order> getCurrentOrderFor(User user);
 
 }
