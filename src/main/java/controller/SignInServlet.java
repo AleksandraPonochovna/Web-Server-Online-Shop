@@ -3,6 +3,7 @@ package controller;
 import factory.UserServiceFactory;
 import model.User;
 import service.UserService;
+import util.DigestMessageGenerate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,12 +32,12 @@ public class SignInServlet extends HttpServlet {
         User user = null;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String hashPassword = DigestMessageGenerate.sha256ToHex(password);
         Optional<User> optUser = userService.getByEmail(email);
-
         if (optUser.isPresent()) {
             user = optUser.get();
         }
-        if (user != null && user.getPassword().equals(password))  {
+        if (user != null && user.getPassword().equals(hashPassword)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             session.setAttribute("roleCurrentUser", user.getRole());
@@ -46,7 +47,7 @@ public class SignInServlet extends HttpServlet {
                 response.sendRedirect("/products");
             }
         } else {
-            request.setAttribute("unknown", "The user is not found. Try again");
+            request.setAttribute("unknown", "The user is not found. Try again. ");
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }

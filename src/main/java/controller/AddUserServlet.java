@@ -4,6 +4,7 @@ import factory.UserServiceFactory;
 import model.User;
 import org.apache.log4j.Logger;
 import service.UserService;
+import util.DigestMessageGenerate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,15 +32,16 @@ public class AddUserServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String repeatPassword = request.getParameter("rpassword");
+            String hashPassword = DigestMessageGenerate.sha256ToHex(password);
+            String repeatHashPassword = DigestMessageGenerate.sha256ToHex(repeatPassword);
             String role = request.getParameter("role");
-            if (password.equals(repeatPassword)) {
-                User user = new User(email, password, role);
+            if (hashPassword.equals(repeatHashPassword)) {
+                User user = new User(email, hashPassword, role);
                 userService.addUser(user);
                 response.sendRedirect("/admin/users");
             } else {
                 request.setAttribute("email", email);
                 request.setAttribute("passwordsError", "Your passwords are not equal.");
-                logger.info("Passwords {" + password + " " + repeatPassword + "} are not equals.");
                 request.getRequestDispatcher("/add_user.jsp").forward(request, response);
             }
         } catch (NumberFormatException ex) {

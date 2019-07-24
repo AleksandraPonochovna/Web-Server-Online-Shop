@@ -1,9 +1,11 @@
 package controller;
 
+import factory.CodeServiceFactory;
 import factory.OrderServiceFactory;
 import model.Code;
 import model.Order;
 import model.User;
+import service.CodeService;
 import service.OrderService;
 
 import javax.servlet.ServletException;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class ConfirmOrderServlet extends HttpServlet {
 
     private static final OrderService orderService = OrderServiceFactory.getOrderService();
+    private static final CodeService codeService = CodeServiceFactory.getCodeService();
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
@@ -33,10 +36,9 @@ public class ConfirmOrderServlet extends HttpServlet {
             request.getRequestDispatcher("/order.jsp").forward(request, response);
         } else {
             User user = (User) request.getSession().getAttribute("user");
-            Optional<Order> optCurrentOrder = orderService.getCurrentOrderFor(user);
-            if (optCurrentOrder.isPresent()) {
-                Order order = optCurrentOrder.get();
-                Code code = order.getCode();
+            Optional<Code> optCode = codeService.getLastCodeForUser(user);
+            if (optCode.isPresent()) {
+                Code code = optCode.get();
                 if (enteredCode.equals(code.getCode())) {
                     request.setAttribute("ok", "Your buying was successful");
                     request.getRequestDispatcher("/confirm_order.jsp").forward(request, response);

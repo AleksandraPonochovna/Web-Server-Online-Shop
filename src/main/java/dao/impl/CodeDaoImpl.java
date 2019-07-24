@@ -7,36 +7,37 @@ import org.apache.log4j.Logger;
 import util.DBConnector;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Optional;
 
 public class CodeDaoImpl implements CodeDao {
 
     private static final Logger logger = Logger.getLogger(CodeDaoImpl.class);
-    private static final String ADD_CODE_IN_DB = "INSERT INTO code (code, id_user) VALUES ('%s', %d)";
-    private static final String GET_LAST_CODE_FOR_USER_FROM_DB = "SELECT * FROM code WHERE id_user = %d " +
-            "ORDER BY id DESC LIMIT 1";
+    private static final String ADD_CODE_IN_DB = "INSERT INTO code (code, id_user) VALUES (?, ?)";
+    private static final String GET_LAST_CODE_FOR_USER_FROM_DB = "SELECT * FROM code WHERE " +
+            "id_user = ? ORDER BY id DESC LIMIT 1";
 
     @Override
     public void add(Code code) {
         try (Connection connection = DBConnector.connect()) {
-            String sql = String.format(ADD_CODE_IN_DB, code.getCode(), code.getIdUser());
-            Statement statement = connection.createStatement();
-            statement.execute(sql);
-            logger.info("Code  " + code + " added in DB.");
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_CODE_IN_DB);
+            preparedStatement.setString(1, code.getCode());
+            preparedStatement.setLong(2, code.getIdUser());
+            preparedStatement.execute();
+            logger.info(code + " added in DB.");
         } catch (SQLException e) {
-            logger.info("Code " + code + " can't be added in DB.");
+            logger.error(code + " can't be added in DB.");
         }
     }
 
     @Override
     public Optional<Code> getLastCodeForUser(User user) {
         try (Connection connection = DBConnector.connect()) {
-            String sql = String.format(GET_LAST_CODE_FOR_USER_FROM_DB, user.getId());
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_LAST_CODE_FOR_USER_FROM_DB);
+            preparedStatement.setLong(1, user.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Code code = new Code(
                         resultSet.getLong("id"),

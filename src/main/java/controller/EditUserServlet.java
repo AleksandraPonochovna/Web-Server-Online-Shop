@@ -4,6 +4,7 @@ import factory.UserServiceFactory;
 import model.User;
 import org.apache.log4j.Logger;
 import service.UserService;
+import util.DigestMessageGenerate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,10 +49,11 @@ public class EditUserServlet extends HttpServlet {
                 Long id = Long.valueOf(request.getParameter("id"));
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
+                String hashPassword = DigestMessageGenerate.sha256ToHex(password);
                 Optional<User> optUser = userService.getById(id);
                 if (optUser.isPresent()) {
                     User user = optUser.get();
-                    userService.editUser(user, email, password);
+                    userService.editUser(user, email, hashPassword);
                     response.sendRedirect("/admin/users");
                 }
             }

@@ -8,9 +8,9 @@ import org.apache.log4j.Logger;
 import util.DBConnector;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,24 +20,26 @@ import static java.util.Objects.nonNull;
 public class BasketDaoImpl implements BasketDao {
 
     private static final Logger logger = Logger.getLogger(BasketDaoImpl.class);
-    private static final String CREATE_BASKET_IN_DB = "INSERT INTO basket (user_id) VALUES (%d)";
-    private static final String ADD_PRODUCT_IN_BASKET = "INSERT INTO product_basket (product_id, basket_id) " +
-            "VALUES (%d, %d)";
-    private static final String GET_PRODUCTS_BY_USER_FROM_DB = "SELECT basket_id, product_id, name, description, price " +
-            "FROM basket INNER JOIN product_basket INNER JOIN products INNER JOIN users WHERE products.id = product_id " +
-            "AND basket_id = basket.id AND user_id = users.id AND users.id = %d";
-    private static final String GET_USER_FOR_BASKET_FROM_DB = "SELECT basket.id, users.id, email, password, role " +
-            "FROM basket INNER JOIN users WHERE user_id = %d AND users.id = user_id";
+    private static final String CREATE_BASKET_IN_DB = "INSERT INTO basket (user_id) VALUES ?";
+    private static final String ADD_PRODUCT_IN_BASKET = "INSERT INTO product_basket (product_id, " +
+            "basket_id) VALUES (?, ?)";
+    private static final String GET_PRODUCTS_BY_USER_FROM_DB = "SELECT basket_id, product_id, " +
+            "name, description, price FROM basket INNER JOIN product_basket INNER JOIN products " +
+            "INNER JOIN users WHERE products.id = product_id AND basket_id = basket.id AND " +
+            "user_id = users.id AND users.id = ?";
+    private static final String GET_USER_FOR_BASKET_FROM_DB = "SELECT basket.id, users.id, " +
+            "email, password, role FROM basket INNER JOIN users WHERE user_id = ? " +
+            "AND users.id = user_id";
 
     @Override
     public void createBasket(User user) {
         try (Connection connection = DBConnector.connect()) {
-            String sql = String.format(CREATE_BASKET_IN_DB, user.getId());
-            Statement statement = connection.createStatement();
-            statement.execute(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_BASKET_IN_DB);
+            preparedStatement.setLong(1, user.getId());
+            preparedStatement.execute();
             logger.info(user + " creates a basket.");
         } catch (SQLException e) {
-            logger.info(user + " can't create a basket.");
+            logger.error(user + " can't create a basket.");
         }
     }
 
@@ -45,12 +47,13 @@ public class BasketDaoImpl implements BasketDao {
     public void addProductInBasket(User user, Product product) {
         try (Connection connection = DBConnector.connect()) {
             Basket basket = getBasket(user);
-            String sql = String.format(ADD_PRODUCT_IN_BASKET, product.getId(), basket.getId());
-            Statement statement = connection.createStatement();
-            statement.execute(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_PRODUCT_IN_BASKET);
+            preparedStatement.setLong(1, product.getId());
+            preparedStatement.setLong(2, basket.getId());
+            preparedStatement.execute();
             logger.info(product + " added in basket.");
         } catch (SQLException e) {
-            logger.info(product + " can't be added in basket.");
+            logger.error(product + " can't be added in basket.");
         }
     }
 
@@ -58,9 +61,9 @@ public class BasketDaoImpl implements BasketDao {
     public List<Product> getProducts(User user) {
         List<Product> products = new ArrayList<>();
         try (Connection connection = DBConnector.connect()){
-            String sql = String.format(GET_PRODUCTS_BY_USER_FROM_DB, user.getId());
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCTS_BY_USER_FROM_DB);
+            preparedStatement.setLong(1, user.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Product productFromDb = new Product(
                         resultSet.getLong("product_id"),
@@ -71,7 +74,7 @@ public class BasketDaoImpl implements BasketDao {
                 return products;
             }
         } catch (SQLException e) {
-            logger.info("User's basket " + user + "} is not found.");
+            logger.error("User's basket " + user + " is not found.");
         }
         return null;
     }
@@ -89,9 +92,9 @@ public class BasketDaoImpl implements BasketDao {
     public Basket getBasket(User user) {
         List<Product> products = getProducts(user);
         try (Connection connection = DBConnector.connect()){
-            String sql = String.format(GET_USER_FOR_BASKET_FROM_DB, user.getId());
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_FOR_BASKET_FROM_DB);
+            preparedStatement.setLong(1, user.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 Long basketId = resultSet.getLong("id");
                 Long userId = resultSet.getLong("users.id");
@@ -103,7 +106,7 @@ public class BasketDaoImpl implements BasketDao {
                 return basketFromDb;
             }
         } catch (SQLException e) {
-            logger.info("User's basket " + user + "} is not found.");
+            logger.error("User's basket " + user + " is not found.");
         }
         return null;
     }
