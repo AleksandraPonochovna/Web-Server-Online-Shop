@@ -18,11 +18,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Long getBasketIdForOrder(Order order) {
-        return orderDao.getBasketIdForOrder(order);
-    }
-
-    @Override
     public Optional<Order> getCurrentOrderFor(User user) {
         return orderDao.getCurrentOrderFor(user);
     }
