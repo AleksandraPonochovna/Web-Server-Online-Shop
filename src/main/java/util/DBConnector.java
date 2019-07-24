@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DBConnector {
 
-    private static final String dbUrl = "jdbc:mysql://localhost:3306/db" +
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/db" +
             "?verifyServerCertificate=false" +
             "&useSSL=false" +
             "&requireSSL=false" +
