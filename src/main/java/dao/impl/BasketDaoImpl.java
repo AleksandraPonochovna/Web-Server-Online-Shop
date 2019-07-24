@@ -18,16 +18,18 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 public class BasketDaoImpl implements BasketDao {
-
+    
     private static final Logger logger = Logger.getLogger(BasketDaoImpl.class);
     private static final String CREATE_BASKET_IN_DB = "INSERT INTO basket (user_id) VALUES (%d)";
-    private static final String ADD_PRODUCT_IN_BASKET = "INSERT INTO product_basket (product_id, basket_id) " +
-            "VALUES (%d, %d)";
-    private static final String GET_PRODUCTS_BY_USER_FROM_DB = "SELECT basket_id, product_id, name, description, price " +
-            "FROM basket INNER JOIN product_basket INNER JOIN products INNER JOIN users WHERE products.id = product_id " +
-            "AND basket_id = basket.id AND user_id = users.id AND users.id = %d";
-    private static final String GET_USER_FOR_BASKET_FROM_DB = "SELECT basket.id, users.id, email, password, role " +
-            "FROM basket INNER JOIN users WHERE user_id = %d AND users.id = user_id";
+    private static final String ADD_PRODUCT_IN_BASKET = "INSERT INTO product_basket (product_id, " +
+            "basket_id) VALUES (%d, %d)";
+    private static final String GET_PRODUCTS_BY_USER_FROM_DB = "SELECT basket_id, product_id, " +
+            "name, description, price FROM basket INNER JOIN product_basket INNER JOIN products " +
+            "INNER JOIN users WHERE products.id = product_id AND basket_id = basket.id AND " +
+            "user_id = users.id AND users.id = %d";
+    private static final String GET_USER_FOR_BASKET_FROM_DB = "SELECT basket.id, users.id, " +
+            "email, password, role FROM basket INNER JOIN users WHERE user_id  =%d " +
+            "AND users.id = user_id";
 
     @Override
     public void createBasket(User user) {
