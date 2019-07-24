@@ -14,13 +14,15 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class OrderDaoImpl implements OrderDao {
-
+    
     private static final Logger logger = Logger.getLogger(OrderDaoImpl.class);
-    private static final String ADD_ORDER_IN_DB = "INSERT INTO `order` (first_name, last_name, number_phone, street_name, " +
-            "house_number, basket_id) VALUES ('%s', '%s', '%s', '%s', '%s', %d)";
-    private static final String GET_ORDER_BY_USER = "SELECT order.id, first_name, last_name, number_phone, street_name," +
-            " house_number, code FROM `order` INNER JOIN basket INNER JOIN code WHERE basket_id = basket.id " +
-            "AND user_id = %d AND user_id = code.id_user LIMIT 1";
+    private static final String ADD_ORDER_IN_DB = "INSERT INTO `order` (first_name, last_name, " +
+            "number_phone, street_name, house_number, basket_id) " +
+            "VALUES ('%s', '%s', '%s', '%s', '%s', %d)";
+    private static final String GET_ORDER_BY_USER = "SELECT order.id, first_name, last_name, " +
+            "number_phone, street_name, house_number, code FROM `order` INNER JOIN basket " +
+            "INNER JOIN code WHERE basket_id = basket.id AND user_id = %d AND user_id = code.id_" +
+            "user LIMIT 1";
 
     @Override
     public void addOrder(Order order) {
