@@ -13,11 +13,11 @@ import java.sql.Statement;
 import java.util.Optional;
 
 public class CodeDaoImpl implements CodeDao {
-
+    
     private static final Logger logger = Logger.getLogger(CodeDaoImpl.class);
     private static final String ADD_CODE_IN_DB = "INSERT INTO code (code, id_user) VALUES ('%s', %d)";
-    private static final String GET_LAST_CODE_FOR_USER_FROM_DB = "SELECT * FROM code WHERE id_user = %d " +
-            "ORDER BY id DESC LIMIT 1";
+    private static final String GET_LAST_CODE_FOR_USER_FROM_DB = "SELECT * FROM code WHERE " +
+            "id_user = %d ORDER BY id DESC LIMIT 1";
 
     @Override
     public void add(Code code) {
