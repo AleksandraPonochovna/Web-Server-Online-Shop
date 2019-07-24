@@ -17,12 +17,15 @@ import java.util.Optional;
 public class ProductsDaoImpl implements ProductsDao {
 
     private static final Logger logger = Logger.getLogger(ProductsDaoImpl.class);
-    private static final String ADD_PRODUCT_IN_DB_SQL = "INSERT INTO products (name, description, price) VALUES ('%s', '%s', %01.2f)";
+    private static final String ADD_PRODUCT_IN_DB_SQL = "INSERT INTO products (name, description, " +
+            "price) VALUES ('%s', '%s', %01.2f)";
     private static final String GET_ALL_PRODUCTS_FROM_DB = "SELECT * FROM products";
     private static final String DELETE_PRODUCT_FROM_DB = "DELETE FROM products WHERE id = %d";
     private static final String GET_PRODUCT_BY_ID_FROM_DB = "SELECT * FROM products WHERE id = %d";
-    private static final String GET_ID_BY_PRODUCT_FROM_DB = "SELECT id FROM products WHERE name = '%s'";
-    private static final String EDIT_PRODUCT = "UPDATE products SET name = '%s', description = '%s', price = %01.2f WHERE id = %d";
+    private static final String GET_ID_BY_PRODUCT_FROM_DB = "SELECT id FROM products " +
+            "WHERE name = '%s'";
+    private static final String EDIT_PRODUCT = "UPDATE products SET name = '%s'," +
+            " description = '%s', price = %01.2f WHERE id = %d";
 
     @Override
     public void addProduct(Product product) {
