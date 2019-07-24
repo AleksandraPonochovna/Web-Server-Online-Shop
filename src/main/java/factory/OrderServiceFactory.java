@@ -10,7 +10,7 @@ public class OrderServiceFactory {
     private OrderServiceFactory() {
     }
 
-    public static OrderService getOrdertService() {
+    public static OrderService getOrderService() {
         if (instance == null) {
             instance = new OrderServiceImpl();
         }

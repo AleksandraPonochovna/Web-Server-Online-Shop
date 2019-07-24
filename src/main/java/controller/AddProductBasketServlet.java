@@ -33,8 +33,10 @@ public class AddProductBasketServlet extends HttpServlet {
             User user = (User) session.getAttribute("user");
             if (optProduct.isPresent()) {
                 Product product = optProduct.get();
-                basketService.createBasket(user);
-                basketService.addProductInBasket(user.getId(), product);
+                if (!basketService.isExist(user)) {
+                    basketService.createBasket(user);
+                }
+                basketService.addProductInBasket(user, product);
                 request.setAttribute("countProductsInBasket", basketService.getCountProducts(user));
                 request.setAttribute("productsInBasket", basketService.getProducts(user));
                 request.getRequestDispatcher("/basket.jsp").forward(request, response);

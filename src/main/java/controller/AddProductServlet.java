@@ -1,9 +1,7 @@
 package controller;
 
 import factory.ProductServiceFactory;
-import org.apache.log4j.Logger;
 import service.ProductService;
-import util.IdGeneratorUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

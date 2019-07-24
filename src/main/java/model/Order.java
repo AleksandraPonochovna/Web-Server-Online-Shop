@@ -8,20 +8,42 @@ public class Order {
     private String numberOfPhone;
     private String streetName;
     private String houseNumber;
-    private String enteredCode;
     private Basket basket;
     private User user;
     private Code code;
 
     public Order(Long id, String firstName, String lastName, String numberOfPhone, String streetName,
-                 String houseNumber, String enteredCode, Basket basket, User user, Code code) {
+                 String houseNumber, User user, Code code) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.numberOfPhone = numberOfPhone;
         this.streetName = streetName;
         this.houseNumber = houseNumber;
-        this.enteredCode = enteredCode;
+        this.user = user;
+        this.code = code;
+    }
+
+    public Order(String firstName, String lastName, String numberOfPhone, String streetName,
+                 String houseNumber, Basket basket, User user, Code code) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.numberOfPhone = numberOfPhone;
+        this.streetName = streetName;
+        this.houseNumber = houseNumber;
+        this.basket = basket;
+        this.user = user;
+        this.code = code;
+    }
+
+    public Order(Long id, String firstName, String lastName, String numberOfPhone, String streetName,
+                 String houseNumber, Basket basket, User user, Code code) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.numberOfPhone = numberOfPhone;
+        this.streetName = streetName;
+        this.houseNumber = houseNumber;
         this.basket = basket;
         this.user = user;
         this.code = code;
@@ -81,14 +103,6 @@ public class Order {
 
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
-    }
-
-    public String getEnteredCode() {
-        return enteredCode;
-    }
-
-    public void setEnteredCode(String enteredCode) {
-        this.enteredCode = enteredCode;
     }
 
     public Basket getBasket() {

@@ -40,7 +40,7 @@ public class MailServiceImpl implements MailService {
                     InternetAddress.parse(order.getUser().getEmail())
             );
             message.setSubject("One-Time Code for buying");
-            message.setText("Hi! It's your code " + order.getCode());
+            message.setText("Hi! It's your code " + order.getCode().getCode());
             Transport.send(message);
         } catch(MessagingException e) {
             e.printStackTrace();

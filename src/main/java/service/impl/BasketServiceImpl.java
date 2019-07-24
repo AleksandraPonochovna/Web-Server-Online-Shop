@@ -19,8 +19,8 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public void addProductInBasket(Long id, Product product) {
-        basketDao.addProductInBasket(id, product);
+    public void addProductInBasket(User user, Product product) {
+        basketDao.addProductInBasket(user, product);
     }
 
     @Override
@@ -36,6 +36,11 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public Basket getBasket(User user) {
         return basketDao.getBasket(user);
+    }
+
+    @Override
+    public boolean isExist(User user) {
+        return basketDao.isExist(user);
     }
 
 }

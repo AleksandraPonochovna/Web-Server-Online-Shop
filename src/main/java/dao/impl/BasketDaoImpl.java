@@ -14,14 +14,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 public class BasketDaoImpl implements BasketDao {
 
     private static final Logger logger = Logger.getLogger(BasketDaoImpl.class);
-    private static final String CREATE_BASKET_IN_DB = "INSERT INTO basket (user_id) VALUES %d";
+    private static final String CREATE_BASKET_IN_DB = "INSERT INTO basket (user_id) VALUES (%d)";
     private static final String ADD_PRODUCT_IN_BASKET = "INSERT INTO product_basket (product_id, basket_id) " +
             "VALUES (%d, %d)";
-    private static final String GET_PRODUCTS_BY_USER_FROM_DB = "SELECT products.id, name, description, price " +
-            "FROM products INNER JOIN basket WHERE basket.id = 1";
+    private static final String GET_PRODUCTS_BY_USER_FROM_DB = "SELECT basket_id, product_id, name, description, price " +
+            "FROM basket INNER JOIN product_basket INNER JOIN products INNER JOIN users WHERE products.id = product_id " +
+            "AND basket_id = basket.id AND user_id = users.id AND users.id = %d";
+    private static final String GET_USER_FOR_BASKET_FROM_DB = "SELECT basket.id, users.id, email, password, role " +
+            "FROM basket INNER JOIN users WHERE user_id = %d AND users.id = user_id";
 
     @Override
     public void createBasket(User user) {
@@ -36,9 +42,10 @@ public class BasketDaoImpl implements BasketDao {
     }
 
     @Override
-    public void addProductInBasket(Long id, Product product) {
+    public void addProductInBasket(User user, Product product) {
         try (Connection connection = DBConnector.connect()) {
-            String sql = String.format(ADD_PRODUCT_IN_BASKET, product.getId(), id);
+            Basket basket = getBasket(user);
+            String sql = String.format(ADD_PRODUCT_IN_BASKET, product.getId(), basket.getId());
             Statement statement = connection.createStatement();
             statement.execute(sql);
             logger.info(product + " added in basket.");
@@ -54,9 +61,9 @@ public class BasketDaoImpl implements BasketDao {
             String sql = String.format(GET_PRODUCTS_BY_USER_FROM_DB, user.getId());
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Product productFromDb = new Product(
-                        resultSet.getLong("id"),
+                        resultSet.getLong("product_id"),
                         resultSet.getString("name"),
                         resultSet.getString("description"),
                         resultSet.getFloat("price"));
@@ -72,12 +79,41 @@ public class BasketDaoImpl implements BasketDao {
     @Override
     public int getCountProducts(User user) {
         List<Product> products = getProducts(user);
+        if (isNull(products)) {
+            return 0;
+        }
         return products.size();
     }
 
     @Override
     public Basket getBasket(User user) {
-        return null; //some implementation
+        List<Product> products = getProducts(user);
+        try (Connection connection = DBConnector.connect()){
+            String sql = String.format(GET_USER_FOR_BASKET_FROM_DB, user.getId());
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) {
+                Long basketId = resultSet.getLong("id");
+                Long userId = resultSet.getLong("users.id");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String role = resultSet.getString("role");
+                User userFromDb = new User(userId, email, password, role);
+                Basket basketFromDb = new Basket(basketId, userFromDb, products);
+                return basketFromDb;
+            }
+        } catch (SQLException e) {
+            logger.info("User's basket " + user + "} is not found.");
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isExist(User user) {
+        if (nonNull(getBasket(user))) {
+            return true;
+        }
+        return false;
     }
 
 }

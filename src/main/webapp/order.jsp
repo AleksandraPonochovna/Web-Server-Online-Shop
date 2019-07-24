@@ -6,7 +6,7 @@
 <body>
 <center>
     <h2> Order </h2>
-    <form action="/products/basket/buy" method="POST">
+    <form action="/products/basket/order" method="POST">
         First Name:<br>
         <input type="text" name="firstName" value="">
         <br>
@@ -22,20 +22,14 @@
         House Number:<br>
         <input type="number" name="house" value="">
         <br>
-        Code from Email:<br>
-        <input type="text" name="code" value=""> <br>
-        <br>
         <c:if test="${ok != null}">
             ${ok}
         </c:if>
         <c:if test="${valid != null}">
             ${valid}
         </c:if>
-        <c:if test="${wrongCode != null}">
-            ${wrongCode}
-        </c:if>
         <br>
-        <button type="submit"> Confirm </button>
+        <button type="submit"> Send </button>
         <button><a href="/sign"> Log Out </a></button>
     </form>
 </center>

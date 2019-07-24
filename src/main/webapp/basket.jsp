@@ -30,7 +30,7 @@
             </tr>
         </c:forEach>
     </table>
-    <button><a href="/products/basket/buy"> Buy </a></button>
+    <button><a href="/products/basket/order"> Buy </a></button>
     <button><a href="/sign"> Log Out </a></button>
 </center>
 </body>

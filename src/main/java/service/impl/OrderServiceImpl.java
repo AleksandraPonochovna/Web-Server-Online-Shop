@@ -3,7 +3,10 @@ package service.impl;
 import dao.OrderDao;
 import factory.OrderDaoFactory;
 import model.Order;
+import model.User;
 import service.OrderService;
+
+import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -12,6 +15,16 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void addOrder(Order order) {
         orderDao.addOrder(order);
+    }
+
+    @Override
+    public Long getBasketIdForOrder(Order order) {
+        return orderDao.getBasketIdForOrder(order);
+    }
+
+    @Override
+    public Optional<Order> getCurrentOrderFor(User user) {
+        return orderDao.getCurrentOrderFor(user);
     }
 
 }
