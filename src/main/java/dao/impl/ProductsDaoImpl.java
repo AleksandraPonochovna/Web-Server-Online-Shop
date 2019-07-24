@@ -33,7 +33,6 @@ public class ProductsDaoImpl implements ProductsDao {
     public void addProduct(String name, String description, Float price) {
         try (Connection connection = DBConnector.connect()) {
             String sql = String.format(Locale.US, ADD_PRODUCT_IN_DB_SQL, name, description, price);
-            System.out.println(sql);
             Statement statement = connection.createStatement();
             statement.execute(sql);
             logger.info("Product with name " + name + " added in DB.");
