@@ -17,15 +17,18 @@ import java.util.Optional;
 public class UsersDaoImpl implements UsersDao {
 
     private static final Logger logger = Logger.getLogger(UsersDaoImpl.class);
-    private static final String ADD_USER_IN_DB = "INSERT INTO users (email, password, role) VALUES ('%s', '%s', '%s')";
+    private static final String ADD_USER_IN_DB = "INSERT INTO users (email, password, role) " +
+            "VALUES ('%s', '%s', '%s')";
     private static final String GET_ALL_USERS_FROM_DB = "SELECT * FROM users";
     private static final String DELETE_USER_FROM_DB = "DELETE FROM users WHERE id = %d";
     private static final String GET_USER_BY_ID_FROM_DB = "SELECT * FROM users WHERE id = %d";
     private static final String GET_USER_BY_EMAIL_FROM_DB = "SELECT * FROM users WHERE email = '%s'";
     private static final String GET_ROLE_BY_EMAIL_PASSWORD_FROM_DB = "SELECT role FROM users " +
             "WHERE email = '%s' AND password = '%s'";
-    private static final String IS_EXIST_USER_IN_DB = "SELECT * FROM users WHERE email = '%s' AND password = '%s'";
-    private static final String EDIT_USER = "UPDATE users SET email = '%s', password = '%s' WHERE id = %d";
+    private static final String IS_EXIST_USER_IN_DB = "SELECT * FROM users WHERE email = '%s' " +
+            "AND password = '%s'";
+    private static final String EDIT_USER = "UPDATE users SET email = '%s', password = '%s'" +
+            " WHERE id = %d";
 
     @Override
     public void addUser(User user) {
