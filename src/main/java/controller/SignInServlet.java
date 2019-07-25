@@ -31,8 +31,7 @@ public class SignInServlet extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
         User user = null;
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String hashPassword = DigestMessageGenerate.sha256ToHex(password);
+        String hashPassword = DigestMessageGenerate.encryptSha256(request.getParameter("password"););
         Optional<User> optUser = userService.getByEmail(email);
         if (optUser.isPresent()) {
             user = optUser.get();
