@@ -48,8 +48,7 @@ public class EditUserServlet extends HttpServlet {
             if (request.getParameter("id") != null) {
                 Long id = Long.valueOf(request.getParameter("id"));
                 String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                String hashPassword = DigestMessageGenerate.sha256ToHex(password);
+                String hashPassword = DigestMessageGenerate.encryptSha256(request.getParameter("password"));
                 Optional<User> optUser = userService.getById(id);
                 if (optUser.isPresent()) {
                     User user = optUser.get();
