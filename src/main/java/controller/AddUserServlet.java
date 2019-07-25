@@ -30,10 +30,8 @@ public class AddUserServlet extends HttpServlet {
                           HttpServletResponse response) throws IOException, ServletException {
         try {
             String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            String repeatPassword = request.getParameter("rpassword");
-            String hashPassword = DigestMessageGenerate.sha256ToHex(password);
-            String repeatHashPassword = DigestMessageGenerate.sha256ToHex(repeatPassword);
+            String hashPassword = DigestMessageGenerate.encryptSha256(request.getParameter("password"));
+            String repeatHashPassword = DigestMessageGenerate.encryptSha256(request.getParameter("rpassword"));
             String role = request.getParameter("role");
             if (hashPassword.equals(repeatHashPassword)) {
                 User user = new User(email, hashPassword, role);
