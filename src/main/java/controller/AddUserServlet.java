@@ -1,8 +1,12 @@
 package controller;
 
+import factory.BasketServiceFactory;
 import factory.UserServiceFactory;
+import model.Basket;
+import model.Order;
 import model.User;
 import org.apache.log4j.Logger;
+import service.BasketService;
 import service.UserService;
 import util.DigestMessageGenerate;
 
@@ -12,12 +16,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 @WebServlet(value = "/admin/add/user")
 public class AddUserServlet extends HttpServlet {
 
     private static final UserService userService = UserServiceFactory.getUserService();
-    private static final Logger logger = Logger.getLogger(AddUserServlet.class);
+    private static final BasketService basketService = BasketServiceFactory.getBasketService();
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -32,8 +37,8 @@ public class AddUserServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String repeatPassword = request.getParameter("rpassword");
-            String hashPassword = DigestMessageGenerate.sha256ToHex(password);
-            String repeatHashPassword = DigestMessageGenerate.sha256ToHex(repeatPassword);
+            String hashPassword = DigestMessageGenerate.encryptSha256(password);
+            String repeatHashPassword = DigestMessageGenerate.encryptSha256(repeatPassword);
             String role = request.getParameter("role");
             if (hashPassword.equals(repeatHashPassword)) {
                 User user = new User(email, hashPassword, role);

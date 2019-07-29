@@ -1,11 +1,11 @@
-package service;
+package dao;
 
 import model.Product;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductService {
+public interface ProductDao {
 
     void addProduct(Product product);
 

@@ -1,18 +1,18 @@
 package factory;
 
-import dao.UsersDao;
-import dao.impl.UsersDaoImpl;
+import dao.UserDao;
+import dao.impl.UserDaoImpl;
 
 public class UserDaoFactory {
 
-    private static UsersDao instance;
+    private static UserDao instance;
 
     private UserDaoFactory() {
     }
 
-    public static UsersDao getUserDao() {
+    public static UserDao getUserDao() {
         if (instance == null) {
-            instance = new UsersDaoImpl();
+            instance = new UserDaoImpl();
         }
         return instance;
     }

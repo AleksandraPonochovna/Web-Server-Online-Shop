@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(value = "/products/edit")
-public class EditProductServlet extends HttpServlet {
+@WebServlet(value = "/products/update")
+public class UpdateProductServlet extends HttpServlet {
 
     private static final ProductService productService = ProductServiceFactory.getProductService();
 
@@ -41,13 +41,10 @@ public class EditProductServlet extends HttpServlet {
                 Long id = Long.valueOf(request.getParameter("id"));
                 String name = request.getParameter("name");
                 String description = request.getParameter("description");
-                Float price = Float.valueOf(request.getParameter("price"));
-                Optional<Product> optProduct = productService.getById(id);
-                if (optProduct.isPresent()) {
-                    Product product = optProduct.get();
-                    productService.editProduct(product, name, description, price);
-                    response.sendRedirect("/products");
-                }
+                Double price = Double.valueOf(request.getParameter("price"));
+                Product updateProduct = new Product(id, name, description, price);
+                productService.updateProduct(updateProduct);
+                response.sendRedirect("/products");
             }
         } catch (NumberFormatException ex) {
             request.setAttribute("validValues", "Something is wrong. Try again.");

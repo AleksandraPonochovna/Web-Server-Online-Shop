@@ -24,7 +24,7 @@ public class CodeDaoImpl implements CodeDao {
         try (Connection connection = DBConnector.connect()) {
             PreparedStatement preparedStatement = connection.prepareStatement(ADD_CODE_IN_DB);
             preparedStatement.setString(1, code.getCode());
-            preparedStatement.setLong(2, code.getIdUser());
+            preparedStatement.setLong(2, code.getUser().getId());
             preparedStatement.execute();
             logger.info(code + " added in DB.");
         } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class CodeDaoImpl implements CodeDao {
                 Code code = new Code(
                         resultSet.getLong("id"),
                         resultSet.getString("code"),
-                        resultSet.getLong("id_user"));
+                        user);
                 return Optional.of(code);
             }
         } catch (SQLException e) {

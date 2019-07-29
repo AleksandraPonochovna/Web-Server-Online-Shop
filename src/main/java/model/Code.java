@@ -1,20 +1,45 @@
 package model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "code")
 public class Code {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-    private String code;
-    private Long idUser;
 
-    public Code(Long id, String code, Long idUser) {
-        this.id = id;
-        this.code = code;
-        this.idUser = idUser;
+    @Column(name = "code")
+    private String code;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private User user;
+
+    public Code() {
     }
 
-    public Code(String code, Long idUser) {
+    public Code(Long id, String code, User user) {
+        this.id = id;
         this.code = code;
-        this.idUser = idUser;
+        this.user = user;
+    }
+
+    public Code(String code, User user) {
+        this.code = code;
+        this.user = user;
+    }
+
+    public Code(String code) {
+        this.code = code;
     }
 
     public Long getId() {
@@ -25,16 +50,12 @@ public class Code {
         this.id = id;
     }
 
-    public Long getIdUser() {
-        return idUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
-    }
-
-    public Code(String code) {
-        this.code = code;
+    public void setIdUser(User user) {
+        this.user = user;
     }
 
     public String getCode() {

@@ -1,6 +1,6 @@
 package service.impl;
 
-import model.Order;
+import model.Code;
 import service.MailService;
 
 import javax.mail.Message;
@@ -15,7 +15,7 @@ import java.util.Properties;
 public class MailServiceImpl implements MailService {
 
     @Override
-    public void sendOneTimeCode(Order order) {
+    public void sendOneTimeCode(Code code, String email) {
         final String username = "onlineshopsupp@gmail.com";
         final String password = "123123123onlineshop";
 
@@ -37,10 +37,11 @@ public class MailServiceImpl implements MailService {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse(order.getUser().getEmail())
+                    //InternetAddress.parse(email)
+                    InternetAddress.parse("alexandra.ponochovna@gmail.com")
             );
             message.setSubject("One-Time Code for buying");
-            message.setText("Hi! It's your code " + order.getCode().getCode());
+            message.setText("Hi! It's your code " + code.getCode());
             Transport.send(message);
         } catch(MessagingException e) {
             e.printStackTrace();

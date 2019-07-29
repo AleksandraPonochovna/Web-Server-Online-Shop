@@ -1,18 +1,18 @@
 package factory;
 
-import dao.ProductsDao;
-import dao.impl.ProductsDaoImpl;
+import dao.ProductDao;
+import dao.impl.ProductDaoImpl;
 
 public class ProductDaoFactory {
 
-    private static ProductsDao instance;
+    private static ProductDao instance;
 
     private ProductDaoFactory() {
     }
 
-    public static ProductsDao getProductDao() {
+    public static ProductDao getProductDao() {
         if (instance == null) {
-            instance = new ProductsDaoImpl();
+            instance = new ProductDaoImpl();
         }
         return instance;
     }

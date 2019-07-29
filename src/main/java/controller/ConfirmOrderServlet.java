@@ -6,7 +6,6 @@ import model.Code;
 import model.Order;
 import model.User;
 import service.CodeService;
-import service.OrderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +18,6 @@ import java.util.Optional;
 @WebServlet("/products/basket/order/confirm")
 public class ConfirmOrderServlet extends HttpServlet {
 
-    private static final OrderService orderService = OrderServiceFactory.getOrderService();
     private static final CodeService codeService = CodeServiceFactory.getCodeService();
 
     protected void doGet(HttpServletRequest request,
@@ -36,9 +34,9 @@ public class ConfirmOrderServlet extends HttpServlet {
             request.getRequestDispatcher("/order.jsp").forward(request, response);
         } else {
             User user = (User) request.getSession().getAttribute("user");
-            Optional<Code> optCode = codeService.getLastCodeForUser(user);
-            if (optCode.isPresent()) {
-                Code code = optCode.get();
+            Optional<Code> optionalCode = codeService.getLastCodeForUser(user);
+            if (optionalCode.isPresent()) {
+                Code code = optionalCode.get();
                 if (enteredCode.equals(code.getCode())) {
                     request.setAttribute("ok", "Your buying was successful");
                     request.getRequestDispatcher("/confirm_order.jsp").forward(request, response);
@@ -49,4 +47,5 @@ public class ConfirmOrderServlet extends HttpServlet {
             }
         }
     }
+
 }

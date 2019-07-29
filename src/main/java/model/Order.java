@@ -1,60 +1,64 @@
 package model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "`order`")
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "number_phone")
     private String numberOfPhone;
+
+    @Column(name = "street_name")
     private String streetName;
+
+    @Column(name = "house_number")
     private String houseNumber;
+
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "basket_id")
     private Basket basket;
-    private User user;
-    private Code code;
+
+    public Order() {
+    }
 
     public Order(Long id, String firstName, String lastName, String numberOfPhone, String streetName,
-                 String houseNumber, User user, Code code) {
+                 String houseNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.numberOfPhone = numberOfPhone;
         this.streetName = streetName;
         this.houseNumber = houseNumber;
-        this.user = user;
-        this.code = code;
     }
 
     public Order(String firstName, String lastName, String numberOfPhone, String streetName,
-                 String houseNumber, Basket basket, User user, Code code) {
+                 String houseNumber, Basket basket) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.numberOfPhone = numberOfPhone;
         this.streetName = streetName;
         this.houseNumber = houseNumber;
         this.basket = basket;
-        this.user = user;
-        this.code = code;
-    }
-
-    public Order(Long id, String firstName, String lastName, String numberOfPhone, String streetName,
-                 String houseNumber, Basket basket, User user, Code code) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.numberOfPhone = numberOfPhone;
-        this.streetName = streetName;
-        this.houseNumber = houseNumber;
-        this.basket = basket;
-        this.user = user;
-        this.code = code;
-    }
-
-    public Code getCode() {
-        return code;
-    }
-
-    public void setCode(Code code) {
-        this.code = code;
     }
 
     public Long getId() {
@@ -111,14 +115,6 @@ public class Order {
 
     public void setBasket(Basket basket) {
         this.basket = basket;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
 }

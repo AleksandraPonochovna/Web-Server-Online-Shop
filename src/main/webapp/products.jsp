@@ -23,7 +23,7 @@
             <td>${product.description}</td>
             <td>${product.price}</td>
             <c:if test="${product.id != null}">
-                <td><button><a href="/products/edit?id=${product.id}"> Edit </a></button></td>
+                <td><button><a href="/products/update?id=${product.id}"> Edit </a></button></td>
                 <td><button><a href="/products/delete?id=${product.id}"> Delete </a></button></td>
             </c:if>
             <c:if test="${product.id == null}">

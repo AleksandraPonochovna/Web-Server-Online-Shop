@@ -11,7 +11,7 @@ public class DigestMessageGenerate {
 
     private static final Logger logger = Logger.getLogger(BasketDaoImpl.class);
 
-    public static String sha256ToHex(String password) {
+    public static String encryptSha256(String password) {
         MessageDigest digest = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");

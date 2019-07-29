@@ -13,9 +13,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @WebServlet("/products/basket")
 public class AddProductBasketServlet extends HttpServlet {
@@ -29,16 +30,22 @@ public class AddProductBasketServlet extends HttpServlet {
         if (request.getParameter("id") != null) {
             Long id = Long.valueOf(request.getParameter("id"));
             Optional<Product> optProduct = productService.getById(id);
-            HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("user");
+            User user = (User) request.getSession().getAttribute("user");
             if (optProduct.isPresent()) {
+                Optional<Basket> optBasket = basketService.getBasketFor(user);
+                Basket basket;
                 Product product = optProduct.get();
-                if (!basketService.isExist(user)) {
-                    basketService.createBasket(user);
+                if (optBasket.isPresent()) {
+                    basket = optBasket.get();
+                    basketService.addProduct(basket, product);
+                } else {
+                    Set<Product> products = new HashSet<>();
+                    products.add(product);
+                    basket = new Basket(user, products);
+                    basketService.add(basket);
                 }
-                basketService.addProductInBasket(user, product);
-                request.setAttribute("countProductsInBasket", basketService.getCountProducts(user));
-                request.setAttribute("productsInBasket", basketService.getProducts(user));
+                request.setAttribute("countProductsInBasket", basketService.getCountProducts(basket));
+                request.setAttribute("productsInBasket", basketService.getProducts(basket));
                 request.getRequestDispatcher("/basket.jsp").forward(request, response);
             }
         } else {

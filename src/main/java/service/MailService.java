@@ -1,9 +1,9 @@
 package service;
 
-import model.Order;
+import model.Code;
 
 public interface MailService {
 
-    void sendOneTimeCode(Order order);
+    void sendOneTimeCode(Code code, String email);
 
 }

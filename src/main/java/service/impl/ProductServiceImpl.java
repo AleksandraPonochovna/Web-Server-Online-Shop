@@ -1,7 +1,8 @@
 package service.impl;
 
-import dao.ProductsDao;
+import dao.ProductDao;
 import factory.ProductDaoFactory;
+import factory.hibernate.ProductDaoHibernateFactory;
 import model.Product;
 import service.ProductService;
 
@@ -10,41 +11,31 @@ import java.util.Optional;
 
 public class ProductServiceImpl implements ProductService {
 
-    private static final ProductsDao productsDao = ProductDaoFactory.getProductDao();
+    private static final ProductDao productDao = ProductDaoHibernateFactory.getProductDao();
 
     @Override
     public void addProduct(Product product) {
-        productsDao.addProduct(product);
-    }
-
-    @Override
-    public void addProduct(String name, String description, Float price) {
-        productsDao.addProduct(name, description, price);
+        productDao.addProduct(product);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return productsDao.getAllProducts();
+        return productDao.getAllProducts();
     }
 
     @Override
-    public void deleteProduct(Long id) {
-        productsDao.deleteProduct(id);
+    public void deleteProduct(Product product) {
+        productDao.deleteProduct(product);
     }
 
     @Override
     public Optional<Product> getById(Long id) {
-        return productsDao.getById(id);
+        return productDao.getById(id);
     }
 
     @Override
-    public Long getIdProduct(Product product) {
-        return productsDao.getIdProduct(product);
-    }
-
-    @Override
-    public void editProduct(Product product, String newName, String newDesc, Float newPrice) {
-        productsDao.editProduct(product, newName, newDesc, newPrice);
+    public void updateProduct(Product product) {
+        productDao.updateProduct(product);
     }
 
 }

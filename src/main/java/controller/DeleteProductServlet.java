@@ -1,6 +1,7 @@
 package controller;
 
 import factory.ProductServiceFactory;
+import model.Product;
 import service.ProductService;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(value = "/products/delete")
 public class DeleteProductServlet extends HttpServlet {
@@ -20,7 +22,9 @@ public class DeleteProductServlet extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         if (id != null) {
-            productService.deleteProduct(Long.valueOf(id));
+            Long idForDelete = Long.valueOf(id);
+            Optional<Product> optProduct = productService.getById(idForDelete);
+            optProduct.ifPresent(productService::deleteProduct);
         }
         response.sendRedirect("/products");
     }

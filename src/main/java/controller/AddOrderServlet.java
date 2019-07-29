@@ -4,6 +4,7 @@ import factory.BasketServiceFactory;
 import factory.CodeServiceFactory;
 import factory.MailServiceFactory;
 import factory.OrderServiceFactory;
+import model.Basket;
 import model.Code;
 import model.Order;
 import model.User;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet("/products/basket/order")
 public class AddOrderServlet extends HttpServlet {
@@ -46,12 +48,15 @@ public class AddOrderServlet extends HttpServlet {
             request.getRequestDispatcher("/order.jsp").forward(request, response);
         } else {
             User user = (User) request.getSession().getAttribute("user");
-            Code code = new Code(RandomHelper.getFourDigitCode(), user.getId());
+            Code code = new Code(RandomHelper.getFourDigitCode(), user);
             codeService.add(code);
-            Order order = new Order(firstName, lastName, numberOfPhone, streetName,
-                    houseNumber, basketService.getBasket(user), user, code);
-            orderService.addOrder(order);
-            mailService.sendOneTimeCode(order);
+            Optional<Basket> optBasket = basketService.getBasketFor(user);
+            if (optBasket.isPresent()) {
+                Order order = new Order(firstName, lastName, numberOfPhone, streetName,
+                        houseNumber, optBasket.get());
+                orderService.addOrder(order);
+            }
+            mailService.sendOneTimeCode(code, user.getEmail());
             request.getRequestDispatcher("/confirm_order.jsp").forward(request, response);
         }
     }

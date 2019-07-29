@@ -4,20 +4,19 @@ import model.Basket;
 import model.Product;
 import model.User;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public interface BasketService {
 
-    void createBasket(User user);
+    void add(Basket basket);
 
-    void addProductInBasket(User user, Product product);
+    void addProduct(Basket basket, Product product);
 
-    List<Product> getProducts(User user);
+    Set<Product> getProducts(Basket basket);
 
-    int getCountProducts(User user);
+    int getCountProducts(Basket basket);
 
-    Basket getBasket(User user);
-
-    boolean isExist(User user);
+    Optional<Basket> getBasketFor(User user);
 
 }

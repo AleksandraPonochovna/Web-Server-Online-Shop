@@ -1,46 +1,42 @@
 package service.impl;
 
 import dao.BasketDao;
-import factory.BasketDaoFactory;
+import factory.hibernate.BasketDaoHibernateFactory;
 import model.Basket;
 import model.Product;
 import model.User;
 import service.BasketService;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public class BasketServiceImpl implements BasketService {
 
-    private static final BasketDao basketDao = BasketDaoFactory.getBasketDao();
+    private static final BasketDao basketDao = BasketDaoHibernateFactory.getBasketDao();
 
     @Override
-    public void createBasket(User user) {
-        basketDao.createBasket(user);
+    public void add(Basket basket) {
+        basketDao.add(basket);
     }
 
     @Override
-    public void addProductInBasket(User user, Product product) {
-        basketDao.addProductInBasket(user, product);
+    public void addProduct(Basket basket, Product product) {
+        basketDao.addProduct(basket, product);
     }
 
     @Override
-    public List<Product> getProducts(User user) {
-        return basketDao.getProducts(user);
+    public Set<Product> getProducts(Basket basket) {
+        return basketDao.getProducts(basket);
     }
 
     @Override
-    public int getCountProducts(User user) {
-        return basketDao.getCountProducts(user);
+    public int getCountProducts(Basket basket) {
+        return basketDao.getCountProducts(basket);
     }
 
     @Override
-    public Basket getBasket(User user) {
-        return basketDao.getBasket(user);
-    }
-
-    @Override
-    public boolean isExist(User user) {
-        return basketDao.isExist(user);
+    public Optional<Basket> getBasketFor(User user) {
+        return basketDao.getBasketFor(user);
     }
 
 }

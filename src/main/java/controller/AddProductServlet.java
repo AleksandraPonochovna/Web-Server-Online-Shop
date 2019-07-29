@@ -1,6 +1,7 @@
 package controller;
 
 import factory.ProductServiceFactory;
+import model.Product;
 import service.ProductService;
 
 import javax.servlet.ServletException;
@@ -27,8 +28,9 @@ public class AddProductServlet extends HttpServlet {
         try {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
-            Float price = Float.valueOf(request.getParameter("price"));
-            productService.addProduct(name, description, price);
+            Double price = Double.valueOf(request.getParameter("price"));
+            Product product = new Product(name, description, price);
+            productService.addProduct(product);
             response.sendRedirect("/products");
         } catch (NumberFormatException ex) {
             request.setAttribute("validFields", "It isn't rightly. Enter the correct values.");

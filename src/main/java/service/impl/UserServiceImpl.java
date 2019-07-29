@@ -1,7 +1,8 @@
 package service.impl;
 
-import dao.UsersDao;
+import dao.UserDao;
 import factory.UserDaoFactory;
+import factory.hibernate.UserDaoHibernateFactory;
 import model.User;
 import service.UserService;
 
@@ -10,51 +11,36 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
-    private static final UsersDao usersDao = UserDaoFactory.getUserDao();
-
-    @Override
-    public void addUser(String email, String password, String role) {
-        usersDao.addUser(email, password, role);
-    }
+    private static final UserDao userDao = UserDaoHibernateFactory.getUserDao();
 
     @Override
     public void addUser(User user) {
-        usersDao.addUser(user);
+        userDao.addUser(user);
     }
 
     @Override
     public List<User> getAllUsers() {
-        return usersDao.getAllUsers();
+        return userDao.getAllUsers();
     }
 
     @Override
-    public void deleteUser(Long id) {
-        usersDao.deleteUser(id);
+    public void deleteUser(User user) {
+        userDao.deleteUser(user);
     }
 
     @Override
-    public Optional<User> getById(Long id) {
-        return usersDao.getById(id);
-    }
-
-    @Override
-    public boolean userIsExist(String email, String password) {
-        return usersDao.userIsExist(email, password);
-    }
-
-    @Override
-    public Optional<String> getRoleByEmailPassword(String email, String password) {
-        return usersDao.getRoleByEmailPassword(email, password);
+    public Optional<User> getById(Long userId) {
+        return userDao.getById(userId);
     }
 
     @Override
     public Optional<User> getByEmail(String email) {
-        return usersDao.getByEmail(email);
+        return userDao.getByEmail(email);
     }
 
     @Override
-    public void editUser(User user, String newEmail, String newPassword) {
-        usersDao.editUser(user, newEmail, newPassword);
+    public void updateUser(User user) {
+        userDao.updateUser(user);
     }
 
 }

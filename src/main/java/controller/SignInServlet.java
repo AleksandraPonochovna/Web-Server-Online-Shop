@@ -14,10 +14,22 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(value = "/sign")
+@WebServlet(value = "/sign", loadOnStartup = 1)
 public class SignInServlet extends HttpServlet {
 
     private static final UserService userService = UserServiceFactory.getUserService();
+
+    @Override
+    public void init() throws ServletException {
+        User admin = new User("admin@ru",
+                "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+                "admin");
+        User user = new User("user@ru",
+                "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb",
+                "user");
+        userService.addUser(user);
+        userService.addUser(admin);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -32,7 +44,7 @@ public class SignInServlet extends HttpServlet {
         User user = null;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String hashPassword = DigestMessageGenerate.sha256ToHex(password);
+        String hashPassword = DigestMessageGenerate.encryptSha256(password);
         Optional<User> optUser = userService.getByEmail(email);
         if (optUser.isPresent()) {
             user = optUser.get();

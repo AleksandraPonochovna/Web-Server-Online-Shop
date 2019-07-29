@@ -2,7 +2,6 @@ package controller;
 
 import factory.UserServiceFactory;
 import model.User;
-import org.apache.log4j.Logger;
 import service.UserService;
 import util.DigestMessageGenerate;
 
@@ -14,11 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet(value = "/admin/users/edit")
-public class EditUserServlet extends HttpServlet {
+@WebServlet(value = "/admin/users/update")
+public class UpdateUserServlet extends HttpServlet {
 
     private static final UserService userService = UserServiceFactory.getUserService();
-    private static final Logger logger = Logger.getLogger(EditUserServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -49,13 +47,10 @@ public class EditUserServlet extends HttpServlet {
                 Long id = Long.valueOf(request.getParameter("id"));
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
-                String hashPassword = DigestMessageGenerate.sha256ToHex(password);
-                Optional<User> optUser = userService.getById(id);
-                if (optUser.isPresent()) {
-                    User user = optUser.get();
-                    userService.editUser(user, email, hashPassword);
-                    response.sendRedirect("/admin/users");
-                }
+                String role = request.getParameter("role");
+                User updateUser = new User(id, email, password, role);
+                userService.updateUser(updateUser);
+                response.sendRedirect("/admin/users");
             }
         } catch (NumberFormatException ex) {
             request.setAttribute("validValues", "Something is wrong. Try again. ");

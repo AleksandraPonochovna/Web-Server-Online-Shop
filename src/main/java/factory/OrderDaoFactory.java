@@ -10,7 +10,7 @@ public class OrderDaoFactory {
     private OrderDaoFactory() {
     }
 
-    public static OrderDao getOrderDap() {
+    public static OrderDao getOrderDao() {
         if (instance == null) {
             instance = new OrderDaoImpl();
         }
