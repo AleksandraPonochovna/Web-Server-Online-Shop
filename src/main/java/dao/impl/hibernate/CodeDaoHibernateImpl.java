@@ -14,7 +14,8 @@ import java.util.Optional;
 public class CodeDaoHibernateImpl implements CodeDao {
 
     private static final Logger logger = Logger.getLogger(CodeDaoHibernateImpl.class);
-    private static final String GET_LAST_CODE_FOR_USER = "FROM Code WHERE user = :user ORDER BY id DESC";
+    private static final String GET_LAST_CODE_FOR_USER = "FROM Code WHERE user = :user " +
+            "ORDER BY id DESC";
 
     @Override
     public void add(Code code) {

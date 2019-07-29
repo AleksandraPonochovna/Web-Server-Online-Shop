@@ -35,8 +35,8 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public Optional<Basket> getBasketFor(User user) {
-        return basketDao.getBasketFor(user);
+    public Optional<Basket> getBasketBy(User user) {
+        return basketDao.getBasketBy(user);
     }
 
 }

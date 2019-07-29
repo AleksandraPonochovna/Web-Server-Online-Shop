@@ -3,7 +3,6 @@ package controller;
 import factory.UserServiceFactory;
 import model.User;
 import service.UserService;
-import util.DigestMessageGenerate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -57,5 +56,6 @@ public class UpdateUserServlet extends HttpServlet {
             request.getRequestDispatcher("/edit_user.jsp").forward(request, response);
         }
     }
+
 }
 

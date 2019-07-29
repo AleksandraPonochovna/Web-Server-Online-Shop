@@ -7,7 +7,6 @@ import model.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
 
@@ -17,6 +16,8 @@ import java.util.Set;
 
 public class BasketDaoHibernateImpl implements BasketDao {
 
+    private static final String GET_BASKET_BY_USER = "FROM Basket WHERE user = :user " +
+            "ORDER BY id DESC";
     private static final Logger logger = Logger.getLogger(BasketDaoHibernateImpl.class);
 
     @Override
@@ -75,11 +76,11 @@ public class BasketDaoHibernateImpl implements BasketDao {
     }
 
     @Override
-    public Optional<Basket> getBasketFor(User user) {
+    public Optional<Basket> getBasketBy(User user) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Query query = session.createQuery("from Basket where user = :user order by id desc");
+            Query query = session.createQuery(GET_BASKET_BY_USER);
             query.setParameter("user", user);
             query.setMaxResults(1);
             Optional<Basket> optBasket = query.uniqueResultOptional();

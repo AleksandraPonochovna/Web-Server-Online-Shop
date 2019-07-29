@@ -32,7 +32,7 @@ public class AddProductBasketServlet extends HttpServlet {
             Optional<Product> optProduct = productService.getById(id);
             User user = (User) request.getSession().getAttribute("user");
             if (optProduct.isPresent()) {
-                Optional<Basket> optBasket = basketService.getBasketFor(user);
+                Optional<Basket> optBasket = basketService.getBasketBy(user);
                 Basket basket;
                 Product product = optProduct.get();
                 if (optBasket.isPresent()) {

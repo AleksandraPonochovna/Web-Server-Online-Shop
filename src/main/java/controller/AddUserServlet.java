@@ -1,12 +1,7 @@
 package controller;
 
-import factory.BasketServiceFactory;
 import factory.UserServiceFactory;
-import model.Basket;
-import model.Order;
 import model.User;
-import org.apache.log4j.Logger;
-import service.BasketService;
 import service.UserService;
 import util.DigestMessageGenerate;
 
@@ -16,13 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 
 @WebServlet(value = "/admin/add/user")
 public class AddUserServlet extends HttpServlet {
 
     private static final UserService userService = UserServiceFactory.getUserService();
-    private static final BasketService basketService = BasketServiceFactory.getBasketService();
 
     @Override
     protected void doGet(HttpServletRequest request,

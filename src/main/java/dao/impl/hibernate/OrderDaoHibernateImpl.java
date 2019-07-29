@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 
-
 public class OrderDaoHibernateImpl implements OrderDao {
 
     private static final Logger logger = Logger.getLogger(OrderDaoHibernateImpl.class);

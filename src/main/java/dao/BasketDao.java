@@ -17,6 +17,6 @@ public interface BasketDao {
 
     int getCountProducts(Basket basket);
 
-    Optional<Basket> getBasketFor(User user);
+    Optional<Basket> getBasketBy(User user);
 
 }

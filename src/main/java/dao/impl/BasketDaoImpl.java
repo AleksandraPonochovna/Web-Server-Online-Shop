@@ -85,7 +85,7 @@ public class BasketDaoImpl implements BasketDao {
     }
 
     @Override
-    public Optional<Basket> getBasketFor(User user) {
+    public Optional<Basket> getBasketBy(User user) {
         return Optional.empty();
     }
 

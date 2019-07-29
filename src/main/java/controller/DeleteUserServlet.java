@@ -28,5 +28,6 @@ public class DeleteUserServlet extends HttpServlet {
         }
         response.sendRedirect("/admin/users");
     }
+
 }
 
