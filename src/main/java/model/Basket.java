@@ -12,8 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "basket")
@@ -24,20 +24,20 @@ public class Basket {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private User user;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "product_basket",
             joinColumns = @JoinColumn(name = "basket_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products = new ArrayList<>();
 
     public Basket() {
     }
 
-    public Basket(Long id, User user, Set<Product> products) {
+    public Basket(Long id, User user, List<Product> products) {
         this.id = id;
         this.user = user;
         this.products = products;
@@ -45,10 +45,10 @@ public class Basket {
 
     public Basket(Long id) {
         this.id = id;
-        this.products = new HashSet<>();
+        this.products = new ArrayList<>();
     }
 
-    public Basket(User user, Set<Product> products) {
+    public Basket(User user, List<Product> products) {
         this.user = user;
         this.products = products;
     }
@@ -73,11 +73,11 @@ public class Basket {
         this.user = user;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setBasket(Set<Product> products) {
+    public void setBasket(List<Product> products) {
         this.products = products;
     }
 

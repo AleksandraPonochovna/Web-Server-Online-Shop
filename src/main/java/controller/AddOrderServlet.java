@@ -50,7 +50,7 @@ public class AddOrderServlet extends HttpServlet {
             User user = (User) request.getSession().getAttribute("user");
             Code code = new Code(RandomHelper.getFourDigitCode(), user);
             codeService.add(code);
-            Optional<Basket> optBasket = basketService.getBasketBy(user);
+            Optional<Basket> optBasket = basketService.getBasketByUser(user);
             if (optBasket.isPresent()) {
                 Order order = new Order(firstName, lastName, numberOfPhone, streetName,
                         houseNumber, optBasket.get());

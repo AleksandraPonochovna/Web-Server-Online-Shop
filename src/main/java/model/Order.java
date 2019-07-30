@@ -3,6 +3,7 @@ package model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,22 +20,22 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "number_phone")
+    @Column(name = "number_phone", nullable = false)
     private String numberOfPhone;
 
-    @Column(name = "street_name")
+    @Column(name = "street_name", nullable = false)
     private String streetName;
 
-    @Column(name = "house_number")
+    @Column(name = "house_number", nullable = false)
     private String houseNumber;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @OneToOne(optional = false, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "basket_id")
     private Basket basket;
 

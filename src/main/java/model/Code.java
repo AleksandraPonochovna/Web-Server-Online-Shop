@@ -3,6 +3,7 @@ package model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,10 +19,10 @@ public class Code {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "code")
+    @Column(name = "code", nullable = false)
     private String code;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private User user;
 
     public Code() {

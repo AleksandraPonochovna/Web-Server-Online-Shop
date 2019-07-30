@@ -11,8 +11,8 @@ import org.hibernate.query.Query;
 import util.HibernateUtil;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public class BasketDaoHibernateImpl implements BasketDao {
 
@@ -52,7 +52,7 @@ public class BasketDaoHibernateImpl implements BasketDao {
     }
 
     @Override
-    public Set<Product> getProducts(Basket basket) {
+    public List<Product> getProducts(Basket basket) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -64,7 +64,7 @@ public class BasketDaoHibernateImpl implements BasketDao {
             }
             logger.error(basket + "can't be taken from DB", e);
         }
-        return Collections.emptySet();
+        return Collections.emptyList();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class BasketDaoHibernateImpl implements BasketDao {
     }
 
     @Override
-    public Optional<Basket> getBasketBy(User user) {
+    public Optional<Basket> getBasketByUser(User user) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();

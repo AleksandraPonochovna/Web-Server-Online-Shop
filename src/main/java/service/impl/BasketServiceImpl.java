@@ -8,7 +8,7 @@ import model.User;
 import service.BasketService;
 
 import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 public class BasketServiceImpl implements BasketService {
 
@@ -25,7 +25,7 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public Set<Product> getProducts(Basket basket) {
+    public List<Product> getProducts(Basket basket) {
         return basketDao.getProducts(basket);
     }
 
@@ -35,8 +35,8 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public Optional<Basket> getBasketBy(User user) {
-        return basketDao.getBasketBy(user);
+    public Optional<Basket> getBasketByUser(User user) {
+        return basketDao.getBasketByUser(user);
     }
 
 }

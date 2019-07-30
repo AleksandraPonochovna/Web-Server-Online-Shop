@@ -5,7 +5,7 @@ import model.Product;
 import model.User;
 
 import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 public interface BasketService {
 
@@ -13,10 +13,10 @@ public interface BasketService {
 
     void addProduct(Basket basket, Product product);
 
-    Set<Product> getProducts(Basket basket);
+    List<Product> getProducts(Basket basket);
 
     int getCountProducts(Basket basket);
 
-    Optional<Basket> getBasketBy(User user);
+    Optional<Basket> getBasketByUser(User user);
 
 }

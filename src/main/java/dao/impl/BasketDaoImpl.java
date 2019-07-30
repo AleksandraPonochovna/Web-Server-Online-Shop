@@ -11,9 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Set;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 
@@ -54,8 +54,8 @@ public class BasketDaoImpl implements BasketDao {
     }
 
     @Override
-    public Set<Product> getProducts(Basket basket) {
-        Set<Product> products = new HashSet<>();
+    public List<Product> getProducts(Basket basket) {
+        List<Product> products = new ArrayList<>();
         try (Connection connection = DBConnector.connect()){
             PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCTS_FROM_DB);
             preparedStatement.setLong(1, 1);
@@ -77,7 +77,7 @@ public class BasketDaoImpl implements BasketDao {
 
     @Override
     public int getCountProducts(Basket basket) {
-        Set<Product> products = getProducts(basket);
+        List<Product> products = getProducts(basket);
         if (isNull(products)) {
             return 0;
         }
@@ -85,7 +85,7 @@ public class BasketDaoImpl implements BasketDao {
     }
 
     @Override
-    public Optional<Basket> getBasketBy(User user) {
+    public Optional<Basket> getBasketByUser(User user) {
         return Optional.empty();
     }
 

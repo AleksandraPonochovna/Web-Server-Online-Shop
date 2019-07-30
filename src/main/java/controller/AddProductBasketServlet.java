@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @WebServlet("/products/basket")
 public class AddProductBasketServlet extends HttpServlet {
@@ -32,14 +32,14 @@ public class AddProductBasketServlet extends HttpServlet {
             Optional<Product> optProduct = productService.getById(id);
             User user = (User) request.getSession().getAttribute("user");
             if (optProduct.isPresent()) {
-                Optional<Basket> optBasket = basketService.getBasketBy(user);
+                Optional<Basket> optBasket = basketService.getBasketByUser(user);
                 Basket basket;
                 Product product = optProduct.get();
                 if (optBasket.isPresent()) {
                     basket = optBasket.get();
                     basketService.addProduct(basket, product);
                 } else {
-                    Set<Product> products = new HashSet<>();
+                    List<Product> products = new ArrayList<>();
                     products.add(product);
                     basket = new Basket(user, products);
                     basketService.add(basket);
