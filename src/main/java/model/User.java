@@ -25,7 +25,25 @@ public class User {
     @Column(name = "role", nullable = false, length = 50)
     private String role;
 
+    @Column(name = "salt", nullable = false)
+    private String salt;
+
     public User() {
+    }
+
+    public User(Long id, String email, String password, String role, String salt) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.salt = salt;
+    }
+
+    public User(String email, String password, String role, String salt) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.salt = salt;
     }
 
     public User(Long id, String email, String password, String role) {
@@ -35,10 +53,12 @@ public class User {
         this.role = role;
     }
 
-    public User(String email, String password, String role) {
-        this.email = email;
-        this.password = password;
-        this.role = role;
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getRole() {

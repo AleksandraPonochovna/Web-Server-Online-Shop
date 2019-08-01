@@ -14,20 +14,25 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
+import static java.util.Objects.nonNull;
+
 @WebServlet(value = "/sign", loadOnStartup = 1)
 public class SignInServlet extends HttpServlet {
 
     private static final UserService userService = UserServiceFactory.getUserService();
 
     @Override
-    public void init() throws ServletException {
-
+    public void init() {
+        String saltAdmin = DigestMessageGenerate.generateSalt();
+        String saltUser = DigestMessageGenerate.generateSalt();
         User admin = new User("admin@ru",
-                DigestMessageGenerate.encryptSha256("admin"),
-                "admin");
+                DigestMessageGenerate.encryptSha256AndSalt("admin", saltAdmin),
+                "admin",
+                saltAdmin);
         User user = new User("user@ru",
-                DigestMessageGenerate.encryptSha256("user"),
-                "user");
+                DigestMessageGenerate.encryptSha256AndSalt("user", saltUser),
+                "user",
+                saltUser);
         userService.addUser(user);
         userService.addUser(admin);
     }
@@ -43,14 +48,16 @@ public class SignInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         User user = null;
+        String salt = null;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String hashPassword = DigestMessageGenerate.encryptSha256(password);
         Optional<User> optUser = userService.getByEmail(email);
         if (optUser.isPresent()) {
             user = optUser.get();
+            salt = user.getSalt();
         }
-        if (user != null && user.getPassword().equals(hashPassword)) {
+        String securePass = DigestMessageGenerate.encryptSha256AndSalt(password, salt);
+        if (nonNull(user) && user.getPassword().equals(securePass)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             session.setAttribute("roleCurrentUser", user.getRole());
