@@ -23,7 +23,7 @@ public class DigestMessageGenerate {
         } catch (NoSuchAlgorithmException e) {
             logger.error("Message Digest don't have an instance.", e);
         }
-        return "";
+        return null;
     }
 
     public static String encryptSha256(String password) {
@@ -35,7 +35,7 @@ public class DigestMessageGenerate {
         } catch (NoSuchAlgorithmException e) {
             logger.error("Message Digest don't have an instance.", e);
         }
-        return "";
+        return null;
     }
 
     private static String bytesToHex(byte[] hash) {
