@@ -26,18 +26,6 @@ public class DigestMessageGenerate {
         return null;
     }
 
-    public static String encryptSha256(String password) {
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-            byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-            return bytesToHex(encodedHash);
-        } catch (NoSuchAlgorithmException e) {
-            logger.error("Message Digest don't have an instance.", e);
-        }
-        return null;
-    }
-
     private static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder();
         for (byte oneByte : hash) {
