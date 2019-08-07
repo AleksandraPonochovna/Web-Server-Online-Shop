@@ -11,7 +11,7 @@ public class DigestMessageGenerateTest extends DigestMessageGenerate {
       String password = "admin";
       String salt = "123456";
       String actualPassword = DigestMessageGenerate.encryptSha256AndSalt(password, salt);
-      String expectedResult = DigestMessageGenerate.encryptSha256(salt + password);
+      String expectedResult = encryptSha256(salt + password);
       Assert.assertEquals(expectedResult, actualPassword);
    }
 
