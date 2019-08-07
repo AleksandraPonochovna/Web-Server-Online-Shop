@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static java.util.Objects.nonNull;
+
 @WebServlet(value = "/admin/add/user")
 public class AddUserServlet extends HttpServlet {
 
@@ -29,12 +31,13 @@ public class AddUserServlet extends HttpServlet {
         try {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            String repeatPassword = request.getParameter("rpassword");
-            String hashPassword = DigestMessageGenerate.encryptSha256(password);
-            String repeatHashPassword = DigestMessageGenerate.encryptSha256(repeatPassword);
+            String repeatPass = request.getParameter("rpassword");
+            String salt = DigestMessageGenerate.generateSalt();
+            String securePass = DigestMessageGenerate.encryptSha256AndSalt(password, salt);
+            String repeatSecurePass = DigestMessageGenerate.encryptSha256AndSalt(repeatPass, salt);
             String role = request.getParameter("role");
-            if (hashPassword.equals(repeatHashPassword)) {
-                User user = new User(email, hashPassword, role);
+            if (nonNull(securePass) && securePass.equals(repeatSecurePass)) {
+                User user = new User(email, securePass, role, salt);
                 userService.addUser(user);
                 response.sendRedirect("/admin/users");
             } else {
